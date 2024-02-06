@@ -1,0 +1,145 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.FormThesisConsultantProposal
+
+@{
+    ViewBag.Title = "ThesisAdvisorProposalFormDetail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container py-4">
+    <form class="myform col col-sm-12 col-md-12 col-xl-8 bg-white m-auto" id="myform">
+        <table class="table table-bordered align-middle min-vh-100" style="width:auto;  border-color:black">
+            <tr style="height:1em">
+                <td colspan="2"><img src="~/Content/images/Logo.png" width="100%" alt="Logo"></td>
+                <td class="fw-bold h3" style="color: rgb(39,39,128); text-align: center;">TEZ DANIŞMAN ÖNERİ FORMU</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    Yüksek lisans tezi danışmanlığımın aşağıda belirtilen öğretim üyesi/üyeleri tarafından yürütülmesi için,
+                    gereğinin yapılmasını izninize saygılarımla arz ederim.
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Program Adı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent h-100 w-100 text-dark" type="text" id="programName" name="programName" value="@Model.Program.ProgramName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Öğrenci Numarası</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent h-100 w-100 text-dark" type="text" id="studentNumber" name="studentNumber" value="@Model.Student.StudentNumber" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Adı Soyadı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="nameSurname" name="nameSurname" value="@Model.Student.StudentFirstName @Model.Student.StudentLastName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Tarih İmza</td>
+                <td>
+                    <input class="border-0 bg-transparent text-dark" type="text" id="stdntDate" name="stdntDate" value="@DateTime.Now.ToString("dd.MM.yyyy")" disabled />
+                </td>
+                <td>İmza :</td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Tez Danışmanının Adı Soyadı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="advisorName" name="advisorName" value="@Model.Academician.AcademicianFirstName @Model.Academician.AcademicianLastName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Tez Eş Danışmanının (Varsa) Adı Soyadı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="coAdvisorName" name="coAdvisorName" value="@Model.Academician1.AcademicianFirstName @Model.Academician1.AcademicianLastName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Tez Konusu</td>
+                <td colspan="2">
+                    <textarea rows="3" class="border-0 bg-transparent w-100 text-dark align-middle" style="resize:none" id="projectTopic" name="projectTopic" disabled>@Model.Topic</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Tarih İmza</td>
+                <td>
+                    <input class="border-0 bg-transparent text-dark" type="text" id="cnsltntDate" name="cnsltntDate" value="" disabled />
+                </td>
+                <td>
+                    imza:
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Anabilim Dalı / Program Başkanı Adı Soyadı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="programHead" name="chairman" value="@Model.Program.Academician.AcademicianFirstName @Model.Program.Academician.AcademicianLastName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Tarih İmza</td>
+                <td>
+                    <input class="border-0 bg-transparent text-dark" type="text" id="chairmanDate" name="chairmanDate" value="" disabled />
+                </td>
+                <td>
+                    İmza :
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    * Bu form en geç tezli yüksek lisans öğrencisi olarak ders kaydı yaptırdığınız 2.yarıyıl sonuna kadar ilgili öğretim üyesi ve
+                    ilgili Anabilim Dalı / Program Başkanı’na imzalatıldıktan sonra, Enstitü Müdürlüğü’ne öğrenci tarafından teslim
+                    edilmelidir.
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    Lisansüstü Eğitim Enstitüsü İletişim Bilgileri <br />
+                    444 07 99 / 6128-6129-6105 <a href="#">lee@isikun.edu.tr</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+    @using (Html.BeginForm("UpdateThesisAdvisorProposalStatus", "Admin", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("formId", Model.FormId)
+        if (Model.FormStatus.StatusName == "Pending")
+        {
+            <div class="d-flex justify-content-evenly p-3">
+                <button class="btn btn-success" name="statusId" value="2">Accept</button>
+                <button class="btn btn-danger" name="statusId" value="3">Reject</button>
+            </div>
+        }
+        else if (Model.FormStatus.StatusName == "Accepted")
+        {
+            <div class="d-flex justify-content-evenly p-3">
+                <button class="btn btn-primary" name="statusId" value="4">Approve</button>
+            </div>
+            <div class="text-center mt-3">
+                <button type="button" class="btn btn-primary" onclick="printDiv()">Print</button>
+            </div>
+        }
+        else if (Model.FormStatus.StatusName == "Rejected")
+        {
+            <div class="alert alert-danger text-center h5 fw-bold w-75 m-auto">Project Rejected</div>
+        }
+        else if (Model.FormStatus.StatusName == "Approved")
+        {
+            <div class="alert alert-primary text-center h5 fw-bold w-75 m-auto">Project Approved</div>
+            <div class="text-center mt-3">
+                <button type="button" class="btn btn-primary" onclick="printDiv()">Print</button>
+            </div>
+        }
+    }
+</div>
+
+<script>
+    function printDiv() {
+        var printContents = document.getElementById('myform').innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+</script>
+

@@ -1,0 +1,215 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.ViewModels.AppointmentViewModel
+@{
+    ViewBag.Title = "Appointments";
+    string data = ViewBag.Data;
+    string message = ViewBag.Message;
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+@{
+    MembershipUser currentUser = Membership.GetUser(User.Identity.Name);
+    Guid userId = (Guid)currentUser.ProviderUserKey;
+}
+<div class="px-5 py-4">
+    <h4 class="text-center alert alert-primary fw-bold">Appointments</h4>
+    @if (message == "exist")
+    {
+        <div class="alert alert-warning w-100 fw-bold mt-3" role="alert">
+            You already have an appointment on this day!
+        </div>
+    }
+    else if (message == "success")
+    {
+        <div class="alert alert-success w-100 fw-bold mt-3" role="alert">
+            Appointment scheduled successfully!
+        </div>
+    }
+    else if (message == "fail")
+    {
+        <div class="alert alert-danger w-100 fw-bold mt-3" role="alert">
+            Failed to schedule appointment!
+        </div>
+    }
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-appointments-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Appointments</button>
+            <button class="nav-link" id="nav-outdated-appointments-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Past Appointments</button>
+
+        </div>
+    </nav>
+
+    <div class="tab-content" id="nav-tabContent">
+
+        <div class="accordion tab-pane fade show active" id="nav-home" role="tabpanel" tabindex="0" aria-labelledby="nav-appointments-tab">
+
+            @foreach (var a in Model.Appointments.Where(a => a.AppointmentDate >= DateTime.Now && a.Student?.UserId == userId)
+                .OrderBy(a => a.AppointmentDate))
+            {
+                <div class="card rounded-0">
+                    <div class="card-body row">
+
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                            <p class="bg-info text-white rounded-pill fw-bold p-2 d-flex justify-content-center" style="font-size:0.80em;width:12em">
+                                <i class="fa-regular fa-calendar-check fs-6"></i>&nbsp;&nbsp;@a.AppointmentDate.Value.ToString("dd.MM.yyyy HH:mm")
+                            </p>
+                            @if (a.AppointmentStatusId == 2)
+                            {
+                                <p class="rounded-pill fw-bold">
+                                    <i class="fa-regular fa-circle-check text-success"></i>&nbsp;
+                                    Active
+                                </p>
+                            }
+                            else if (a.AppointmentStatusId == 3)
+                            {
+                                <p class="rounded-pill fw-bold">
+                                    <i class="fa-regular fa-circle-xmark text-danger"></i>&nbsp;
+                                    Cancelled
+                                </p>
+                            }
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                            <p>
+                                <i class="fa-solid fa-bars-progress"></i>&nbsp;
+                                @(String.IsNullOrEmpty(a.AppointmentTopic) ? "-" : (a.AppointmentTopic.Length > 15 ? a.AppointmentTopic.Substring(0, 15) + ".." : a.AppointmentTopic))
+
+                            </p>
+                            <p>
+                                <i class="fa-regular fa-building"></i>&nbsp;&nbsp;@a.Academician.RoomNo
+                            </p>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                            <p>
+                                <i class="fa-solid fa-user"></i>&nbsp;&nbsp;
+                                @(
+                                (a.Student.StudentFirstName.Length + a.Student.StudentLastName.Length) > 20
+                                ? a.Student.StudentFirstName + " " + a.Student.StudentLastName[0]
+                                : a.Student.StudentFirstName + " " + a.Student.StudentLastName
+                            )
+
+                            </p>
+                            <p class="card-text">
+                                <i class="fa-solid fa-chalkboard-user"></i>&nbsp;&nbsp;
+                                @(
+                            (a.Academician.AcademicianFirstName.Length + a.Academician.AcademicianLastName.Length) > 20
+                            ? a.Academician.AcademicianFirstName + " " + a.Academician.AcademicianLastName[0] + "."
+                            : a.Academician.AcademicianFirstName + " " + a.Academician.AcademicianLastName
+                        )
+                            </p>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                            <p>
+                                <i class="fa-solid fa-tag"></i>&nbsp;&nbsp;Appointment
+                            </p>
+                            @if (a.AppointmentStatusId == 2)
+                            {
+                                <button class="btn btn-danger rounded-circle" data-bs-toggle="modal" data-bs-target="#staticCancel-@a.AppointmentId"><i class="fa-regular fa-circle-xmark text-white"></i></button>
+                            }
+                            <!-- MODAL STARTS HERE -->
+                            <div class="modal fade" id="staticCancel-@a.AppointmentId" data-bs-backdrop="static" data-bs-keyboard="false"
+                                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Cancel Appointment</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body fw-bold">
+                                            Are you sure you want to cancel the appointment?
+                                        </div>
+                                        @using (Html.BeginForm("CancelAppointment", "Student", FormMethod.Post, new { id = "cancelForm-" + a.AppointmentId }))
+                                        {
+                                            <div class="modal-body">
+                                                <p><b>Advisor:</b> <span>@a.Academician.AcademicianFirstName @a.Academician.AcademicianLastName</span></p>
+                                                <p>
+                                                    <b>Appointment Date:</b>
+                                                    <span>@a.AppointmentDate.Value.ToString("dd.MM.yyyy HH:mm")</span>
+                                                </p>
+                                                <p>
+                                                    <b>Appointment Topic:</b>
+                                                    <span>@a.AppointmentTopic</span>
+                                                </p>
+                                                @Html.Hidden("appointmentId", a.AppointmentId, new { id = "appointmentId-" + a.AppointmentId })
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <input type="button" class="btn btn-secondary"
+                                                       data-bs-dismiss="modal" value="Close" />
+                                                <input type="submit" class="btn btn-primary mx-2"
+                                                       data-bs-dismiss="modal" value="Yes" />
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- MODAL ENDS HERE -->
+                        </div>
+
+                    </div>
+                </div>
+
+            }
+        </div>
+
+        <div class="accordion tab-pane fade" id="nav-profile" role="tabpanel" tabindex="0" aria-labelledby="nav-outdated-appointments-tab">
+            @foreach (var a in Model.Appointments.Where(a => a.AppointmentDate < DateTime.Now && a.Student?.UserId == userId)
+                .OrderByDescending(a => a.AppointmentDate))
+            {
+                <div class="card rounded-0">
+                    <div class="card-body row">
+
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                            <p class="bg-secondary text-white rounded-pill fw-bold p-2 d-flex justify-content-center" style="font-size: 0.80em; width: 12em">
+                                <i class="fa-regular fa-calendar-minus fs-6"></i>&nbsp;&nbsp;@a.AppointmentDate.Value.ToString("dd.MM.yyyy HH:mm")
+                            </p>
+                            <p class="rounded-pill fw-bold">
+                                <i class="fas fa-hourglass-end text-secondary"></i>&nbsp;
+                                Outdated
+                            </p>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                            <p>
+                                <i class="fa-solid fa-bars-progress"></i>&nbsp;
+                                @(String.IsNullOrEmpty(a.AppointmentTopic) ? "-" : (a.AppointmentTopic.Length > 15 ? a.AppointmentTopic.Substring(0, 15) + ".." : a.AppointmentTopic))
+                            </p>
+                            <p>
+                                <i class="fa-regular fa-building"></i>&nbsp;&nbsp;@a.Academician.RoomNo
+                            </p>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                            <p>
+                                <i class="fa-solid fa-user"></i>&nbsp;&nbsp;
+                                @(
+                                (a.Student.StudentFirstName.Length + a.Student.StudentLastName.Length) > 20
+                                ? a.Student.StudentFirstName + " " + a.Student.StudentLastName[0]
+                                : a.Student.StudentFirstName + " " + a.Student.StudentLastName
+                            )
+
+                            </p>
+                            <p class="card-text">
+                                <i class="fa-solid fa-chalkboard-user"></i>&nbsp;&nbsp;
+                                @(
+                              (a.Academician.AcademicianFirstName.Length + a.Academician.AcademicianLastName.Length) > 20
+                              ? a.Academician.AcademicianFirstName + " " + a.Academician.AcademicianLastName[0] + "."
+                              : a.Academician.AcademicianFirstName + " " + a.Academician.AcademicianLastName
+                          )
+                            </p>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                            <p>
+                                <i class="fa-solid fa-tag"></i>&nbsp;&nbsp;Appointment
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>

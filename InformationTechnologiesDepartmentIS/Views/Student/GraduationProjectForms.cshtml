@@ -1,0 +1,330 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.ViewModels.GraduationProjectViewModels.ProjectFormsViewModel
+
+@{
+    ViewBag.Title = "GraduationProjectForms";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+<head>
+    <link href="~/Content/css/graduation-project.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<div class="col p-3">
+    <div class="card">
+        <div class="card-header border-0">
+            <h2 class="mb-0">Master's Project Forms</h2>
+        </div>
+        <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Forms</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Advisor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.projectExist)
+                    {
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <span class="avatar rounded-circle mr-3">
+                                        <i class="fa-brands fa-wpforms"></i>
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="/Student/ProjectAdvisorProposalForm" class="mb-0 text-sm">Project Advisor Proposal Form</a>
+                                    </div>
+                                </div>
+                            </th>
+                            <td>
+                                <span class="badge badge-dot mr-4">
+                                    @if (Model?.FormProjectConsultantProposal?.FormStatusId == 1)
+                                    {
+                                        <a class="bg-warning text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Pending</a>
+                                    }
+                                    else if (Model?.FormProjectConsultantProposal?.FormStatusId == 2)
+                                    {
+                                        <a class="bg-success text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Accepted</a>
+                                    }
+                                    else if (Model?.FormProjectConsultantProposal?.FormStatusId == 3)
+                                    {
+                                        <a class="bg-danger text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Rejected</a>
+                                    }
+                                    else if (Model?.FormProjectConsultantProposal?.FormStatusId == 4)
+                                    {
+                                        <a class="bg-info text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Approved</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="bg-dark opacity-50 text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Blank</a>
+                                    }
+                                </span>
+                            </td>
+                            <td>
+                                <div class="avatar-group">
+                                    @Model.AdvisorFullName
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <span class="avatar rounded-circle mr-3">
+                                        <i class="fa-brands fa-wpforms"></i>
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="/Student/ProjectAdvisorChangeProposalForm" class="mb-0 text-sm">Project Advisor Change Proposal Form </a>
+                                    </div>
+                                </div>
+                            </th>
+                            <td>
+                                <span class="badge badge-dot mr-4">
+                                    @if (Model?.FormProjectConsultantChangeProposal?.FormStatusId == 1)
+                                    {
+                                        <a class="bg-warning text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Pending</a>
+                                    }
+                                    else if (Model?.FormProjectConsultantChangeProposal?.FormStatusId == 2)
+                                    {
+                                        <a class="bg-success text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Accepted</a>
+                                    }
+                                    else if (Model?.FormProjectConsultantChangeProposal?.FormStatusId == 3)
+                                    {
+                                        <a class="bg-danger text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Rejected</a>
+                                    }
+                                    else if (Model?.FormProjectConsultantChangeProposal?.FormStatusId == 4)
+                                    {
+                                        <a class="bg-info text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Approved</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="bg-dark opacity-50 text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Blank</a>
+                                    }
+                                </span>
+                            </td>
+                            <td>
+                                <div class="avatar-group">
+                                    @Model.AdvisorFullName
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <span class="avatar rounded-circle mr-3">
+                                        <i class="fa-brands fa-wpforms"></i>
+
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="/Student/ProjectSubjectChangeProposalForm" class="mb-0 text-sm">Project Topic Change Proposal Form </a>
+                                    </div>
+                                </div>
+                            </th>
+                            <td>
+                                <span class="badge badge-dot mr-4">
+                                    @if (Model?.FormProjectSubjectChangeProposal?.FormStatusId == 1)
+                                    {
+                                        <a class="bg-warning text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Pending</a>
+                                    }
+                                    else if (Model?.FormProjectSubjectChangeProposal?.FormStatusId == 2)
+                                    {
+                                        <a class="bg-success text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Accepted</a>
+                                    }
+                                    else if (Model?.FormProjectSubjectChangeProposal?.FormStatusId == 3)
+                                    {
+                                        <a class="bg-danger text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Rejected</a>
+                                    }
+                                    else if (Model?.FormProjectSubjectChangeProposal?.FormStatusId == 4)
+                                    {
+                                        <a class="bg-info text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Approved</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="bg-dark opacity-50 text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Blank</a>
+                                    }
+                                </span>
+                            </td>
+                            <td>
+                                <div class="avatar-group">
+                                    @Model.AdvisorFullName
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <span class="avatar rounded-circle mr-3">
+                                        <i class="fa-brands fa-wpforms"></i>
+
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="/Student/ProjectTitleProposalForm" class="mb-0 text-sm">Project Title Proposal Form </a>
+                                    </div>
+                                </div>
+                            </th>
+                            <td>
+                                @if (Model?.FormProjectTitleProposal?.FormStatusId == 1)
+                                {
+                                    <a class="bg-warning text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Pending</a>
+                                }
+                                else if (Model?.FormProjectTitleProposal?.FormStatusId == 2)
+                                {
+                                    <a class="bg-success text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Accepted</a>
+                                }
+                                else if (Model?.FormProjectTitleProposal?.FormStatusId == 3)
+                                {
+                                    <a class="bg-danger text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Rejected</a>
+                                }
+                                else if (Model?.FormProjectTitleProposal?.FormStatusId == 4)
+                                {
+                                    <a class="bg-info text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Approved</a>
+                                }
+                                else
+                                {
+                                    <a class="bg-dark opacity-50 text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Blank</a>
+                                }
+                            </td>
+                            <td>
+                                <div class="avatar-group">
+                                    @Model.AdvisorFullName
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <span class="avatar rounded-circle mr-3">
+                                        <i class="fa-brands fa-wpforms"></i>
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="/Student/ProjectDeliveryCertificateForm" class="mb-0 text-sm">Project Delivery Certificate Form </a>
+                                    </div>
+                                </div>
+                            </th>
+                            <td>
+                                @if (Model?.FormProjectDeliveryCertificate?.FormStatusId == 1)
+                                {
+                                    <a class="bg-warning text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Pending</a>
+                                }
+                                else if (Model?.FormProjectDeliveryCertificate?.FormStatusId == 2)
+                                {
+                                    <a class="bg-success text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Accepted</a>
+                                }
+                                else if (Model?.FormProjectDeliveryCertificate?.FormStatusId == 3)
+                                {
+                                    <a class="bg-danger text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Rejected</a>
+                                }
+                                else if (Model?.FormProjectDeliveryCertificate?.FormStatusId == 4)
+                                {
+                                    <a class="bg-info text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Approved</a>
+                                }
+                                else
+                                {
+                                    <a class="bg-dark opacity-50 text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Blank</a>
+                                }
+                            </td>
+                            <td>
+                                <div class="avatar-group">
+                                    @Model.AdvisorFullName
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <span class="avatar rounded-circle mr-3">
+                                        <i class="fa-brands fa-wpforms"></i>
+
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="/Student/ProjectPlagiarismReportForm" class="mb-0 text-sm">Project Plagiarism Report Form </a>
+                                    </div>
+                                </div>
+                            </th>
+                            <td>
+                                @if (Model?.FormPlagiarismReport?.FormStatusId == 1)
+                                {
+                                    <a class="bg-warning text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Pending</a>
+                                }
+                                else if (Model?.FormPlagiarismReport?.FormStatusId == 2)
+                                {
+                                    <a class="bg-success text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Accepted</a>
+                                }
+                                else if (Model?.FormPlagiarismReport?.FormStatusId == 3)
+                                {
+                                    <a class="bg-danger text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Rejected</a>
+                                }
+                                else if (Model?.FormPlagiarismReport?.FormStatusId == 4)
+                                {
+                                    <a class="bg-info text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Approved</a>
+                                }
+                                else
+                                {
+                                    <a class="bg-dark opacity-50 text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Blank</a>
+                                }
+                            </td>
+                            <td>
+                                <div class="avatar-group">
+                                    @Model.AdvisorFullName
+
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <span class="avatar rounded-circle mr-3">
+                                        <i class="fa-brands fa-wpforms"></i>
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="/Student/ProjectAdvisorProposalForm" class="mb-0 text-sm">Project Advisor Proposal Form </a>
+                                    </div>
+                                </div>
+                            </th>
+                            <td>
+                                <span class="badge badge-dot mr-4">
+                                    @if (Model?.FormProjectConsultantProposal?.FormStatusId == 1)
+                                    {
+                                        <a class="bg-warning text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Pending</a>
+                                    }
+                                    else if (Model?.FormProjectConsultantProposal?.FormStatusId == 2)
+                                    {
+                                        <a class="bg-success text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Accepted</a>
+                                    }
+                                    else if (Model?.FormProjectConsultantProposal?.FormStatusId == 3)
+                                    {
+                                        <a class="bg-danger text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Rejected</a>
+                                    }
+                                    else if (Model?.FormProjectConsultantProposal?.FormStatusId == 4)
+                                    {
+                                        <a class="bg-info text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Approved</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="bg-dark opacity-50 text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Blank</a>
+                                    }
+                                </span>
+                            </td>
+                            <td>
+                                <div class="avatar-group">
+                                    @Model.AdvisorFullName
+
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

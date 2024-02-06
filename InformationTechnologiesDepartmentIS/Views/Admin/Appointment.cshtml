@@ -1,0 +1,376 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.ViewModels.AppointmentViewModel
+@{
+    ViewBag.Title = "Appointment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="~/Content/css/appointment-styles.css" />
+</head>
+<body>
+
+    <main class="p-4">
+        <div class="py-3">
+            <span class="fw-bold h3">Create Appointment</span>
+            @{
+                MembershipUser currentUser = Membership.GetUser(User.Identity.Name);
+                Guid userId = (Guid)currentUser.ProviderUserKey;
+                int? maxNumberOfColumns;
+
+                if (Model.Appointments != null && Model.Appointments.Any())
+                {
+                    var groupedAppointments = Model.Appointments
+                        .Where(appointment => appointment.AcademicianId == userId && appointment.AppointmentDate != null)
+                        .OrderBy(appointment => appointment.AppointmentDate)
+                        .GroupBy(appointment => ((DateTime)appointment.AppointmentDate).ToString("dd-MM-yy"));
+
+                    if (groupedAppointments.Any())
+                    {
+                        maxNumberOfColumns = groupedAppointments.Max(group => group.Count());
+                    }
+                    else
+                    {
+                        maxNumberOfColumns = 0;
+                    }
+                }
+                else
+                {
+                    maxNumberOfColumns = 0;
+                }
+
+                bool isCurrentInView = ViewBag.IsCurrent;
+                string checkedAttributeCurrent = isCurrentInView ? "bg-primary text-white" : "bg-light text-primary";
+                string checkedAttributeOutdated = !isCurrentInView ? "bg-secondary text-white" : "bg-light text-secondary";
+            }
+
+
+            @using (Html.BeginForm("CreateAppointment", "Admin", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="my-4 row">
+                    <div class="col-md-4 col-sm-6">
+                        @Html.TextBox(
+                     "AppointmentDate",
+                     Model.Appointment.AppointmentDate.HasValue
+                         ? Model.Appointment.AppointmentDate.Value.ToString("yyyy-MM-ddTHH:mm")
+                         : string.Empty,
+                     new { @class = "form-control", @placeholder = "Select date and time", @type = "datetime-local" }
+                     )
+                    </div>
+                    <div class="btn-group col-md-4 col-sm-6" role="group" aria-label="Basic radio toggle button group">
+                        @Html.RadioButtonFor(model => model.Appointment.IsRenewable, false, new { @class = "btn-check", @name = "btnradio", @id = "btnradio1", @autocomplete = "off", @value = 0, @checked = "true" })
+                        <label class="btn btn-outline-primary" for="btnradio1">Not Renewable</label>
+                        @Html.RadioButtonFor(model => model.Appointment.IsRenewable, true, new { @class = "btn-check", @name = "btnradio", @id = "btnradio2", @autocomplete = "off", @value = 1 })
+                        <label class="btn btn-outline-primary" for="btnradio2">Renewable</label>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <input type="submit" class="btn btn-primary btn w-100" data-toggle="button" aria-pressed="false"
+                               autocomplete="off" value="Create Appointment" />
+                    </div>
+
+                </div>
+            }
+        </div>
+        <div class="container-fluid p-0">
+            <div class="btn-group margin-5px-left py-3 d-flex justify-content-between" role="group" aria-label="Basic radio toggle button group">
+                @using (Html.BeginForm("ShowOutDatedAppointment", "Admin", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off"/>
+                    <label class="btn btn-outline-secondary @checkedAttributeOutdated" for="btnradio3">Show Outdated</label>
+                }
+                @using (Html.BeginForm("ShowCurrentAppointment", "Admin", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off"/>
+                    <label class="btn btn-outline-primary @checkedAttributeCurrent" for="btnradio4">Show Current</label>
+                }
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript">
+
+        </script>
+        <script>
+            $(document).ready(function () {
+                $('.edit-appointment-btn').click(function () {
+                    var appointmentId = $(this).data('appointment-id');
+                    var appointmentStatus = $(this).data('appointment-status');
+                    var isRenewable = $(this).data('is-renewable');
+                    var studentName = $(this).data('student-name');
+                    var studentLastname = $(this).data('student-lastname');
+                    var formattedDate = $(this).data('formatted-date');
+                    var topic = $(this).data('topic');
+                    $('#exampleModalLabel').text('Randevuyu Düzenle');
+                    $('#appointmentStatus').text(appointmentStatus);
+                    $('#isRenewable').text(isRenewable);
+                    $('#appointmentIdInput').val(appointmentId);
+                    $('#exampleModal').modal('show');
+                    $('#status').val(appointmentId);
+                });
+            });
+        </script>
+
+
+    </main>
+
+    <div class="container px-4">
+        <div class="table-responsive">
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr class="bg-secondary text-white">
+                        <th class="text-uppercase">
+                            Date
+                        </th>
+                        <th class="text-uppercase" colspan="99">Appointment Schedule</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var appointmentGroup in Model.Appointments
+                        .Where(appointment => appointment.AcademicianId == userId)
+                        .OrderBy(appointment => appointment.AppointmentDate)
+                        .GroupBy(appointment => ((DateTime)appointment.AppointmentDate).ToString("dd-MM-yy")))
+                    {
+                        var firstAppointment = appointmentGroup.First();
+                        DateTime appointmentDate = (DateTime)firstAppointment.AppointmentDate;
+                        string formattedDate = appointmentDate.ToString("dd.MM.yyyy");
+                        string dayOfWeek = appointmentDate.ToString("dddd");
+                        <tr class="bg-light-gray">
+                            <td class="align-middle fw-bold bg-secondary text-white">
+                                <div>@dayOfWeek</div>
+                                <div>@formattedDate</div>
+                            </td>
+
+                            @foreach (var appointment2 in Model.Appointments
+                                .Where(appointment2 => appointment2.AcademicianId == userId)
+                                .OrderBy(appointment2 => appointment2.AppointmentDate))
+                            {
+
+                                if (formattedDate == appointment2.AppointmentDate.Value.ToString("dd.MM.yyyy"))
+                                {
+                                    DateTime appointmentDate2 = (DateTime)appointment2.AppointmentDate;
+                                    string appointmentStatus = appointment2.AppointmentStatus.AppointmentStatusName;
+                                    string formattedDate2 = appointmentDate2.ToString("HH:mm");
+                                    string topic = appointment2.AppointmentTopic;
+                                    string studentName = appointment2?.Student?.StudentFirstName;
+                                    string studentLastname = appointment2?.Student?.StudentLastName;
+                                    int appointmentID = appointment2.AppointmentId;
+                                    bool isRenewable = (bool)appointment2.IsRenewable;
+
+                                    <td>
+                                        <table class="table table-borderless">
+                                            <tr>
+                                         <td class="d-flex flex-column justify-content-center align-items-center">
+                                                    @if (appointmentStatus == "Taken")
+                                                    {
+                                                        <button class="bg-yellow padding-5px-tb padding-15px-lr border-radius-5 text-white font-size16  xs-font-size13 border-0 button-width" data-bs-toggle="modal" data-bs-target="#modal-@appointmentID">Full</button>
+                                                    }
+                                                    else if (appointmentStatus == "Cancelled")
+                                                    {
+                                                        <button class="bg-lightred padding-5px-tb padding-15px-lr border-radius-5 text-white font-size16  xs-font-size13 border-0 d-flex justify-content-md-center align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modal-@appointmentID">
+                                                            @appointmentStatus
+                                                        </button>
+
+                                                    }
+                                                    else if (appointmentStatus == "Available")
+                                                    {
+                                                        <button class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 text-white font-size16  xs-font-size13 border-0 button-width" data-bs-toggle="modal" data-bs-target="#modal-@appointmentID">
+                                                            @appointmentStatus
+                                                        </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="bg-secondary padding-5px-tb padding-15px-lr border-radius-5 text-white font-size16  xs-font-size13 border-0 button-width" disabled>@appointmentStatus</button>
+                                                    }
+                                                    <div class="margin-10px-top font-size14 fw-bold">@formattedDate2</div>
+                                                    <div class="font-size13 text-dark opacity-75 mt-1 fw-normal">
+                                                        @(String.IsNullOrEmpty(studentName) ? "-" : studentName + " " + studentLastname)
+                                                    </div>
+
+                                            </tr>
+
+
+                                            <tr>
+
+                                            </tr>
+                                        </table>
+                                        <div class="modal fade" id="modal-@appointmentID" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Appointment</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <table class="table table-borderless">
+                                                            <tr>
+                                                                <td class="text-lg-start fw-bold">
+                                                                    Date:
+                                                                </td>
+                                                                <td class="text-lg-end">
+                                                                    @appointmentDate2.ToString("dd.MM.yyyy HH:mm - dddd")
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-lg-start fw-bold">
+                                                                    Student:
+                                                                </td>
+                                                                <td class="text-lg-end">
+                                                                    @(String.IsNullOrEmpty(studentName) ? "-" : studentName + " " + studentLastname)
+
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-lg-start fw-bold">
+                                                                    Topic:
+                                                                </td>
+                                                                <td class="text-lg-end">
+                                                                    @(String.IsNullOrEmpty(@appointment2.AppointmentTopic) ? "-" : @appointment2.AppointmentTopic)
+
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-lg-start fw-bold">
+                                                                    Appointment Status:
+                                                                </td>
+
+                                                                <td class="text-lg-end">
+                                                                    @if (appointmentStatus == "Available")
+                                                                    {
+                                                                        <button class="btn btn-info btn-sm" disabled>Available</button>
+                                                                    }
+                                                                    else if (appointmentStatus == "Taken")
+                                                                    {
+                                                                        <button class="btn btn-warning btn-sm" disabled>Full</button>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <button class="btn btn-danger btn-sm" disabled>Cancelled</button>
+                                                                    }
+                                                                </td>
+                                                            </tr>
+                                                            @if (appointmentStatus == "Available" || appointmentStatus == "Taken")
+                                                            {
+                                                                <tr>
+                                                                    <td class="text-lg-start fw-bold">
+                                                                        Cancel Appointment:
+                                                                    </td>
+
+                                                                    <td class="text-lg-end">
+
+                                                                        @using (Html.BeginForm("CancelAppointment", "Admin", FormMethod.Post))
+                                                                        {
+                                                                            @Html.AntiForgeryToken()
+                                                                            @Html.Hidden("AppointmentId", appointmentID, new { id = "appointmentIdInput" })
+                                                                            <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                                                                        }
+
+
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                            else
+                                                            {
+                                                                <tr>
+                                                                    <td class="text-lg-start fw-bold">
+                                                                        Activate Appointment:
+                                                                    </td>
+
+                                                                    <td class="text-lg-end">
+                                                                        @using (Html.BeginForm("MakeActiveAppointment", "Admin", FormMethod.Post))
+                                                                        {
+                                                                            @Html.AntiForgeryToken()
+                                                                            @Html.Hidden("AppointmentId", appointmentID, new { id = "appointmentIdInput" })
+                                                                            <button type="submit" class="btn btn-success btn-sm">Activate</button>
+                                                                        }
+
+
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                            <tr>
+                                                                <td class="text-lg-start fw-bold">
+                                                                    Renewability:
+                                                                </td>
+                                                                <td class="text-lg-end">
+
+                                                                    @if (isRenewable)
+                                                                    {
+                                                       <button type="button" class="btn btn-success btn-sm" disabled>Renewable</button>
+                                                                        
+                                                                    }
+                                                                    else
+                                                                    {
+                                                        <button type="button" class="btn btn-danger btn-sm" disabled>Not Renewable</button>
+                                                                        }
+                                                                    
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-lg-start fw-bold">
+                                                                    Change Renewability:
+                                                                </td>
+                                                                <td class="text-lg-end">
+
+                                                                    @if (isRenewable)
+                                                                    {
+                                                                        using (Html.BeginForm("MakeNotRenewable", "Admin", FormMethod.Post))
+                                                                        {
+                                                                            @Html.AntiForgeryToken()
+                                                                            @Html.Hidden("AppointmentId", appointmentID)
+                                                                            <button type="submit" class="btn btn-danger btn-sm">Make Not Renewable</button>
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        using (Html.BeginForm("MakeRenewable", "Admin", FormMethod.Post))
+                                                                        {
+                                                                            @Html.AntiForgeryToken()
+                                                                            @Html.Hidden("AppointmentId", appointmentID)
+                                                                            <button type="submit" class="btn btn-success btn-sm">Make Renewable</button>
+                                                                        }
+                                                                    }
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                          
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                }
+
+                            }
+
+                            @for (int i = 0; i < maxNumberOfColumns - appointmentGroup.Count(); i++)
+                            {
+                                <td></td>
+                            }
+                            @if (maxNumberOfColumns > 0 && maxNumberOfColumns < 5)
+                            {
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    <td></td>
+                                }
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

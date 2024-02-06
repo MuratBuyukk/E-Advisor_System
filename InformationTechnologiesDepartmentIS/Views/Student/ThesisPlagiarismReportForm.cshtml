@@ -1,0 +1,168 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.ViewModels.MasterThesisViewModels.ThesisPlagiarismReportViewModel
+@{
+    ViewBag.Title = "Thesis Plagiarism Report Form";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+@{
+    var programName = "";
+    var studentNumber = "";
+    var nameSurname = "";
+    var stdntDate = "";
+    var consultantName = "";
+    var projectTopicOld = "";
+    var projectTopicNew = "";
+    var cnsltntDate = "";
+    var chairman = "";
+    var chairmanDate = "";
+    MembershipUser currentUser = Membership.GetUser(User.Identity.Name);
+}
+<div class="d-flex justify-content-center align-items-start w-100 row p-4 mx-0 my-0 overflow-hidden">
+    <h4 class="text-center mb-4 fw-bolder alert alert-primary">Master's Thesis Plagiarism Report Form</h4>
+    @if (Model.Form.FormStatusId == 0 || Model.Form.FormStatusId == 3 || Model.Form.FormStatusId == 4)
+    {
+        <div class="d-flex flex-column gap-3 p-4 text-black bg-white col col-sm-12 col-md-12 col-xl-4 fw-semibold border border-dark border-opacity-75 border-1" id="form">
+            @using (Html.BeginForm("ThesisPlagiarismReportForm", "Student", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+            <div class="col-12 mt-3">
+                <p class="form-label fw-bold h5 mb-3 text-primary">
+                    SEND PLAGIARIMS REPORT FORM
+                </p>
+                <p>
+                    I declare that all information and findings contained and presented in this thesis are provided and presented in accordance with academic rules and ethical framework. Moreover; I also declare that I have acted as required by these rules and conduct, and that I have fully cited and cited all materials and results outside of this research.
+                </p>
+                @Html.Hidden("ThesisId", Model.MasterThesis.ThesisId, new { id = "thesisId" })
+            </div>
+                <div class="col-12 text-end pt-4">
+                    <button type="submit" class="btn btn-primary fw-bold">Send</button>
+                </div>
+            }
+        </div>
+    }
+    <form class="myform col col-sm-12 col-md-12 col-xl-8 bg-white" id="myform">
+        <table class="table table-bordered align-middle min-vh-100" style="width:auto;  border-color:black">
+            <tr style="height:1em">
+                <td colspan="2"><img src="~/Content/images/Logo.png" width="100%" alt="Logo"></td>
+                <td class="fw-bold h2" style="color: rgb(39,39,128); text-align: center;">İNTİHAL TUTANAĞI</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    Yüksek lisans Proje danışmanımın aşağıda belirtilen şekilde değiştirilmesi için gereğinin
+                    yapılmasını izninize sunarım. Saygılarımla.
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Programı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent h-100 w-100 text-dark" type="text" id="programName" name="programName" value="@Model.MasterThesis.ProgramName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Öğrenci Numarası</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent h-100 w-100 text-dark" type="text" id="studentNumber" name="studentNumber" value="@Model.MasterThesis.Student.StudentNumber" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Öğrencinin Adı Soyadı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="nameSurname" name="nameSurname" value="@Model.MasterThesis.Student.StudentFirstName @Model.MasterThesis.Student.StudentLastName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Proje Başlığı</td>
+                <td colspan="2">
+                    <textarea rows="3" class="border-0 bg-transparent w-100 text-dark align-middle" style="resize:none" id="projectTitle" name="projectTitle" disabled>@Model.MasterThesis.Title</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    Bu tezde yer alan ve sunulan tüm bilgi ve bulguların akademik kurallar ve etik çerçeveye göre
+                    sağlandığını ve sunulduğunu beyan ederim. Ayrıca; bu kurallar ve davranışların gerektirdiği şekilde
+                    hareket ettiğimi, bu araştırmanın dışındaki tüm materyal ve sonuçlara tam olarak kaynak gösterdiğimi
+                    ve atıfta bulunduğumu da beyan ederim.
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Tarih İmza</td>
+                <td>
+                    <input class="border-0 bg-transparent text-dark" type="text" id="Date" name="Date" value="@DateTime.Now.ToString("dd.MM.yyyy")" disabled />
+                </td>
+                <td>
+                    Öğrenci imzası:
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    I hereby declare that all information in this document/thesis has been obtained and presented in
+                    accordance with the academic rules and ethical conduct. I also declare that, as required by these rules
+                    and conduct, I have fully cited and referenced all material and results that are not original to this work.
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Tarih İmza</td>
+                <td>
+                    <input class="border-0 bg-transparent text-dark" type="text" id="Date" name="Date" value="@DateTime.Now.ToString("dd.MM.yyyy")" disabled />
+                </td>
+                <td>
+                    Öğrenci imzası:
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Tez Danışmanı Adı ve Soyadı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="consultantName" name="consultantName" value="@Model.MasterThesis.Advisor.AcademicianFirstName @Model.MasterThesis.Advisor.AcademicianLastName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Tarih İmza</td>
+                <td>
+                    <input class="border-0 bg-transparent text-dark" type="text" id="cnsltntDate" name="cnsltntDate" value="@cnsltntDate" disabled />
+                </td>
+                <td>
+                    Danışman İmzası:
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    Lisansüstü Eğitim Enstitüsü İletişim Bilgileri <br />
+                    444 07 99 / 6128-6129-6105 <a href="#">lee@isikun.edu.tr</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+    @if (Model.Form.FormStatusId == 2)
+    {
+        <div class="text-center mt-3">
+            <button type="button" class="btn btn-primary" onclick="printDiv()">Print</button>
+        </div>
+    }
+</div>
+
+
+<script>
+    function printDiv() {
+        var printContents = document.getElementById('myform').innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+</script>
+
+<script>
+    const form = document.getElementById('form');
+
+    form.addEventListener('input', function (event) {
+        const targetInput = event.target;
+        const inputText = targetInput.value;
+        if (targetInput.id === 'projectTopicInput') {
+            const projectTopic = document.getElementById('projectTopicNew');
+            projectTopic.value = inputText;
+        }
+    });
+
+
+</script>
+
+

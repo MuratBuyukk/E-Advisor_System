@@ -1,0 +1,51 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.ViewModels.AddUserViewModel
+
+@{
+    ViewBag.Title = "AddUser";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("AddUser", "Administrator", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="p-5">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">First Name</label>
+            @Html.TextBox("FirstName", "", new { @class = "form-control mt-2" })
+            @Html.ValidationMessage("FirstName", "", new { @class = "text-danger" })
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Last Name</label>
+            @Html.TextBox("LastName", "", new { @class = "form-control mt-2" })
+            @Html.ValidationMessage("LastName", "", new { @class = "text-danger" })
+
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            @Html.TextBox("Email", "", new { @class = "form-control mt-2" })
+            @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
+
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            @Html.TextBox("Password", "", new { @class = "form-control mt-2" })
+            @Html.ValidationMessage("Password", "", new { @class = "text-danger" })
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlSelectInput1">
+                Select Role&nbsp;
+            </label>
+            @{
+                var list = new List<SelectListItem>();
+                list.Add(new SelectListItem { Text = "Academician", Value = "Academician" });
+                list.Add(new SelectListItem { Text = "Admin", Value = "Admin" });
+                list.Add(new SelectListItem { Text = "Student", Value = "Student" });
+
+            }
+            @Html.DropDownList("Role", list, "Select Role..", new { @class = "form-select form-select-sm mt-2 px-3 py-2" })
+            @Html.ValidationMessage("Role", "", new { @class = "text-danger" })
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    </div>
+}

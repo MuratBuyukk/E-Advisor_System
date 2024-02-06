@@ -1,0 +1,118 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.ViewModels.ProjectAdvisorViewModel
+
+@{
+    ViewBag.Title = "GraduationThesis";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+
+<div class="container-fluid px-5">
+
+    @if (Model.Response == 1)
+    {
+        <div class="fw-bold text-center mt-5 fs-5 alert alert-info">Your project has been sent to your advisor for approval.</div>
+    }
+    @if (Model.Response == 2)
+    {
+        <div class="text-success fw-bold text-center mt-5 fs-5 alert alert-success">Your project has been approved.</div>
+    }
+    @if (Model.Response == 3)
+    {
+
+        using (Html.BeginForm("DeleteExistingProject", "Student", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="mt-5">
+                <div class="alert alert-danger" role="alert">
+                    <h5 class="alert-heading text-danger fw-bold text-center">Your project has been rejected by advisor.</h5>
+                    <hr />
+
+                        <b>Advisor's feedback:</b>
+                        <p class="mb-2 mt-2">@(!String.IsNullOrEmpty(Model.FeedbackMessage) ? Model.FeedbackMessage : "[There is no feedback]")</p>
+                    <div class="d-flex justify-content-center">
+                        <input type="submit" class="btn btn-primary mt-4 mx-3" value="Send a new project" />
+                    </div>
+                </div>
+            </div>
+
+        }
+    }
+        @if (Model.Response == 0)
+        {
+            <h3 class="mt-5 text-center">Graduation Thesis Form</h3>
+
+            using (Html.BeginForm("GraduationThesis", "Student", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.Hidden("ProjectStatusId", 1)
+                @Html.Hidden("SubmissionDate", DateTime.Now)
+                <div class="form-group px-5 mt-5">
+                    <label for="exampleFormControlInput1">Proposed Title of the Thesis</label>
+                    @Html.TextBox("ProjectTitle", Model.ProjectTitle, new { @class = "form-control mt-2" })
+                    @Html.ValidationMessage("ProjectTitle", "", new { @class = "text-danger" })
+
+                </div>
+                <div class="form-group px-5 mt-4">
+                    <label for="exampleFormControlInput2">Project Main Domain</label>
+                    @Html.TextBox("ProjectMainDomain", Model.ProjectMainDomain, new { @class = "form-control mt-2" })
+                    @Html.ValidationMessage("ProjectMainDomain", "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group px-5 mt-4">
+                    <label for="exampleFormControlInput3">Project Sub Subdomain(s)</label>
+                    @Html.TextBox("ProjectSubDomains", Model.ProjectSubDomains, new { @class = "form-control mt-2" })
+                    @Html.ValidationMessage("ProjectSubDomains", "", new { @class = "text-danger" })
+
+                </div>
+                <div class="form-group px-5 mt-4">
+                    <label for="exampleFormControlTextarea1">Problem</label>
+                    @Html.TextArea("Problem", Model.Problem, new { @class = "form-control mt-2" })
+                    @Html.ValidationMessage("Problem", "", new { @class = "text-danger" })
+
+                </div>
+                <div class="form-group px-5 mt-4">
+                    <label for="exampleFormControlTextarea2">Proposed Solution</label>
+                    @Html.TextArea("Solution", Model.Solution, new { @class = "form-control mt-2" })
+                    @Html.ValidationMessage("Solution", "", new { @class = "text-danger" })
+
+                </div>
+                <div class="form-group px-5 mt-4">
+                    <label for="exampleFormControlTextarea3">Thesis Statement</label>
+                    @Html.TextArea("ThesisStatement", Model.ThesisStatement, new { @class = "form-control mt-2" })
+                    @Html.ValidationMessage("ThesisStatement", "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group px-5 mt-4">
+                    <label for="exampleFormControlSelectInput1">
+                        Choose your advisor&nbsp;<span class="text-muted">
+                            (If
+                            you
+                            cannot
+                            select an advisor, it
+                            means their quota is full.)
+                        </span>
+                    </label>
+                    @{
+                        var academicianList = new List<SelectListItem>();
+
+                        foreach (var academician in Model.ProjectAdvisors)
+                        {
+                            academicianList.Add(new SelectListItem
+                            {
+                                Text = $"{academician.Academician.AcademicianFirstName} {academician.Academician.AcademicianLastName}",
+                                Value = academician.Academician.UserId.ToString(),
+                                Selected = false
+                            });
+                        }
+                    }
+
+                    @Html.DropDownList("advisorUserId", academicianList, "Select advisor..", new { @class = "form-select form-select-sm mt-2 px-3 py-2" })
+                    @Html.ValidationMessage("advisorUserId", "", new { @class = "text-danger" })
+
+
+                </div>
+                <div class="form-group px-5 mt-5 mb-5 float-end">
+                    <input type="submit" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" value="Submit Project" />
+                </div>
+            }
+        }
+</div>
+

@@ -1,0 +1,108 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.ViewModels.ProjectCountsViewModel
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4 fs-2">Dashboard</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Graduation Projects</li>
+        </ol>
+        <div class="row">
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-warning text-white mb-4">
+                    <div class="card-body">Pending Projects</div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-white stretched-link" href="/Admin/PendingProjects">@Model.PendingCount Project(s)</a>
+                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-success text-white mb-4">
+                    <div class="card-body">Accepted Projects</div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-white stretched-link" href="/Admin/AcceptedProjects">@Model.AcceptedCount Project(s)</a>
+                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-danger text-white mb-4">
+                    <div class="card-body">Rejected Projects</div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-white stretched-link" href="/Admin/RejectedProjects">@Model.RejectedCount Project(s)</a>
+                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                Projects
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple">
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Student</th>
+                            <th>Advisor</th>
+                            <th>Project Title</th>
+                            <th>Submission Date</th>
+                            <th>Status</th>
+                            <th>View</th>
+
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Number</th>
+                            <th>Student</th>
+                            <th>Advisor</th>
+                            <th>Project Title</th>
+                            <th>Submission Date</th>
+                            <th>Status</th>
+                            <th>View</th>
+
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var project in Model.Projects)
+                        {
+                            <tr>
+                                <td>@project.Student.StudentNumber</td>
+                                <td>@project.Student.StudentFirstName @project.Student.StudentLastName</td>
+                                <td>@project.Advisor.Academician.AcademicianFirstName @project.Advisor.Academician.AcademicianLastName</td>
+                                <td><a href='/Admin/GraduationThesisDetail/@project.ProjectId'>@(project.ProjectTitle.Length>=30 ? project.ProjectTitle.Substring(0,30) + "..." : project.ProjectTitle ) </a></td>
+                                <td>@project.SubmissionDate.Value.ToString("dd.MM.yyyy HH:mm")</td>
+                                @if (@project.ProjectStatu.ProjectStatusId == 1)
+                                {
+                                    <td><a class="bg-warning text-white p-1 px-2 fw-bold rounded-1 small text-decoration-none">@project.ProjectStatu.ProjectStatusName</a></td>
+                                }
+
+                                @if (@project.ProjectStatu.ProjectStatusId == 2)
+                                {
+                                    <td><a class="bg-success text-white p-1 px-2 fw-bold rounded-1 small text-decoration-none">@project.ProjectStatu.ProjectStatusName</a></td>
+                                }
+
+                                @if (@project.ProjectStatu.ProjectStatusId == 3)
+                                {
+                                    <td><a class="bg-danger text-white p-1 px-2 fw-bold rounded-1 small text-decoration-none">@project.ProjectStatu.ProjectStatusName</a></td>
+                                }
+                                <td><a href='/Admin/GraduationThesisDetail/@project.ProjectId'><input type="button" value="View" class="btn btn-primary btn-sm p-1 px-2"/></a></td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</main>
+

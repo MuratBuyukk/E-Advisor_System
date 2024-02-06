@@ -1,0 +1,244 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.ViewModels.MasterThesisViewModels.ThesisConsultantProposalViewModel
+@{
+    ViewBag.Title = "Master Thesis Advisor Proposal Form";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+@{
+    var programName = "";
+    var studentNumber = "";
+    var nameSurname = "";
+    var stdntDate = "";
+    var advisorName = "";
+    var coAdvisorName = "";
+    var projectTopic = "";
+    var cnsltntDate = "";
+    var chairman = "";
+    var chairmanDate = "";
+    MembershipUser currentUser = Membership.GetUser(User.Identity.Name);
+}
+<div class="d-flex justify-content-center align-items-start w-100 row p-4 mx-0 my-0 overflow-hidden">
+    <h4 class="text-center mb-4 fw-bolder alert alert-primary">Master's Thesis Advisor Proposal Form</h4>
+    @if (Model.FormThesisConsultantProposal.FormStatusId == 0 || Model.FormThesisConsultantProposal.FormStatusId == 3)
+    {
+        <div class="d-flex flex-column gap-3 p-4 text-black bg-white col col-sm-12 col-md-12 col-xl-4 fw-semibold border border-dark border-opacity-75 border-1" id="form">
+            @using (Html.BeginForm("ThesisAdvisorProposalForm", "Student", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="col-12">
+                    <p class="form-label fw-bold h4 mb-4 text-primary">
+                        Fill the form
+                    </p>
+                    <p class="form-label fw-bold h6 text-danger">
+                        @Model.errorMessage
+                    </p>
+                    <label for="inputAddress" class="form-label">
+                        Name and Surname of the Project Consultant:
+                    </label>
+                    @{
+                        var advisorList = new List<SelectListItem>();
+                        foreach (var academician in Model.Academicians)
+                        {
+                            advisorList.Add(new SelectListItem
+                            {
+                                Text = $"{academician.AcademicianFirstName} {academician.AcademicianLastName}",
+                                Value = academician.UserId.ToString(),
+                                Selected = false
+                            });
+                        }
+                    }
+                    @Html.DropDownList("AdvisorId", advisorList, "Select an advisor", new { @class = "form-select border border-secondary border-opacity-50", id = "advisorDropdown", onchange = "updateAdvisorName()" })
+                    @Html.ValidationMessage("AdvisorId", "", new { @class = "text-danger fw-bold" })
+
+                    <label for="inputAddress" class="form-label">
+                        Name and Surname of the Project Co-Advisor (Optional):
+                    </label>
+                    @{
+                        var coAdvisorList = new List<SelectListItem>();
+                        foreach (var academician in Model.Academicians)
+                        {
+                            coAdvisorList.Add(new SelectListItem
+                            {
+                                Text = $"{academician.AcademicianFirstName} {academician.AcademicianLastName}",
+                                Value = academician.UserId.ToString(),
+                                Selected = false
+                            });
+                        }
+                    }
+                    @Html.DropDownList("CoAdvisorId", coAdvisorList, "Select an advisor", new { @class = "form-select border border-secondary border-opacity-50", id = "coAdvisorDropdown", onchange = "updateCoAdvisorName()" })
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="inputAddress" class="form-label">
+                        Project Topic:
+                    </label>
+                    @Html.TextArea("Topic", new { @class = "form-control border border-secondary border-opacity-50", id = "projectTopicInput", placeholder = "Enter the topic here..", rows = 4 })
+                    @Html.ValidationMessage("Topic", "", new { @class = "text-danger fw-bold" })
+                    @Html.Hidden("StudentId", Model.Student.UserId, new { id = "studentId" })
+                    @Html.Hidden("ProgramId", Model.Student.ProgramId, new { id = "programId" })
+
+
+                </div>
+                <div class="col-12 text-end pt-4">
+                    <button type="submit" class="btn btn-primary fw-bold">Send</button>
+                </div>
+            }
+        </div>
+    }
+    <form class="myform col col-sm-12 col-md-12 col-xl-8 bg-white" id="myform">
+        <table class="table table-bordered align-middle min-vh-100" style="width:auto;  border-color:black">
+            <tr style="height:1em">
+                <td colspan="2"><img src="~/Content/images/Logo.png" width="100%" alt="Logo"></td>
+                <td class="fw-bold h3" style="color: rgb(39,39,128); text-align: center;">TEZ DANIŞMAN ÖNERİ FORMU</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    Yüksek lisans tezi danışmanlığımın aşağıda belirtilen öğretim üyesi/üyeleri tarafından yürütülmesi için,
+                    gereğinin yapılmasını izninize saygılarımla arz ederim.
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Program Adı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent h-100 w-100 text-dark" type="text" id="programName" name="programName" value="@Model.ProgramName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Öğrenci Numarası</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent h-100 w-100 text-dark" type="text" id="studentNumber" name="studentNumber" value="@Model.Student.StudentNumber" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Adı Soyadı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="nameSurname" name="nameSurname" value="@Model.Student.StudentFirstName @Model.Student.StudentLastName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Tarih İmza</td>
+                <td>
+                    <input class="border-0 bg-transparent text-dark" type="text" id="stdntDate" name="stdntDate" value="@DateTime.Now.ToString("dd.MM.yyyy")" disabled />
+                </td>
+                <td>İmza :</td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Tez Danışmanının Adı Soyadı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="advisorName" name="advisorName" value="@(Model.FormThesisConsultantProposal.FormStatusId == 3 ? null : Model.Advisor)" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Tez Eş Danışmanının (Varsa) Adı Soyadı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="coAdvisorName" name="coAdvisorName" value="@(Model.FormThesisConsultantProposal.FormStatusId == 3 ? null : Model.CoAdvisor)" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Tez Konusu</td>
+                <td colspan="2">
+                    <textarea rows="3" class="border-0 bg-transparent w-100 text-dark align-middle" style="resize:none" id="projectTopic" name="projectTopic" disabled>@(Model.FormThesisConsultantProposal.FormStatusId == 3 ? null : Model.FormThesisConsultantProposal.Topic)</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Tarih İmza</td>
+                <td>
+                    <input class="border-0 bg-transparent text-dark" type="text" id="cnsltntDate" name="cnsltntDate" value="@cnsltntDate" disabled />
+                </td>
+                <td>
+                    imza:
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Anabilim Dalı / Program Başkanı Adı Soyadı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="programHead" name="chairman" value="@Model.ProgramHead" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Tarih İmza</td>
+                <td>
+                    <input class="border-0 bg-transparent text-dark" type="text" id="chairmanDate" name="chairmanDate" value="@chairmanDate" disabled />
+                </td>
+                <td>
+                    İmza :
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    * Bu form en geç tezli yüksek lisans öğrencisi olarak ders kaydı yaptırdığınız 2.yarıyıl sonuna kadar ilgili öğretim üyesi ve
+                    ilgili Anabilim Dalı / Program Başkanı’na imzalatıldıktan sonra, Enstitü Müdürlüğü’ne öğrenci tarafından teslim
+                    edilmelidir.
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    Lisansüstü Eğitim Enstitüsü İletişim Bilgileri <br />
+                    444 07 99 / 6128-6129-6105 <a href="#">lee@isikun.edu.tr</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+    @if (Model.FormThesisConsultantProposal.FormStatusId == 2 || Model.FormThesisConsultantProposal.FormStatusId == 4)
+    {
+        <div class="text-center mt-3">
+                <button type="button" class="btn btn-primary" onclick="printDiv()">Print</button>
+            </div>
+    }
+    </div>
+    
+
+
+<script>
+    function printDiv() {
+        var printContents = document.getElementById('myform').innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+</script>
+
+<script>
+    const form = document.getElementById('form');
+
+    form.addEventListener('input' ,function (event) {
+        const targetInput = event.target;
+        const inputText = targetInput.value;
+        if (targetInput.id === 'projectTopicInput') {
+            const projectTopic = document.getElementById('projectTopic');
+            projectTopic.value = inputText;
+        }
+    });
+
+
+    function updateAdvisorName() {
+        var selectedOption = document.getElementById("advisorDropdown").options[document.getElementById("advisorDropdown").selectedIndex];
+        var selectedText = selectedOption.text;
+        var names = selectedText.split(' ');
+        var consultantNameInput = document.getElementById("advisorName");
+
+        if (names.length >= 2) {
+            var firstName = names.slice(0, -1).join(' ');
+            var lastName = names[names.length - 1];
+            consultantNameInput.value = firstName + " " + lastName;
+        } else {
+            consultantNameInput.value = selectedText;
+        }
+    }
+
+    function updateCoAdvisorName() {
+        var selectedOption = document.getElementById("coAdvisorDropdown").options[document.getElementById("coAdvisorDropdown").selectedIndex];
+        var selectedText = selectedOption.text;
+        var names = selectedText.split(' ');
+        var consultantNameInput = document.getElementById("coAdvisorName");
+
+        if (names.length >= 2) {
+            var firstName = names.slice(0, -1).join(' ');
+            var lastName = names[names.length - 1];
+            consultantNameInput.value = firstName + " " + lastName;
+        } else {
+            consultantNameInput.value = selectedText;
+        }
+    }
+</script>
+
+

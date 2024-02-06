@@ -1,0 +1,175 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.Project
+
+@{
+    int availableQuota = ViewBag.Quota;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<main>
+    <div class="container-fluid px-4">
+        <h3 class="mt-4">Graduation Project</h3>
+        <p class="text-black opacity-75">Confirmation</p>
+        <div class="breadcrumb mb-4">
+        </div>
+        @if (availableQuota <= 0)
+        {
+            <p class="alert alert-danger fw-bold">
+                Your quota is full!
+            </p>
+        }
+        else if (availableQuota <= 5)
+        {
+            <p class="alert alert-warning fw-bold">
+                You have @availableQuota quotas left.
+            </p>
+        }
+        else
+        {
+            <p class="alert alert-info fw-bold">
+                You have @availableQuota quotas left.
+            </p>
+        }
+
+        <div class="card mb-4 px-2 py-2">
+
+            <div class="card-body my-2 bottom">
+                @if (Model != null)
+                {
+                    <h6>Student:</h6>
+                    <p>
+                        @Model.Student.StudentFirstName @Model.Student.StudentLastName
+                    </p>
+                    <h6>Proposed Title of the Thesis:</h6>
+                    <p>
+                        @Model.ProjectTitle
+                    </p>
+                    <h6>Project Main Domain:</h6>
+                    <p>
+                        @Model.ProjectMainDomain
+                    </p>
+                    <h6>Project Main Subdomain(s):</h6>
+                    <p>
+                        @Model.ProjectSubDomains
+                    </p>
+                    <h6>Problem:</h6>
+                    <p>
+                        @Model.Problem
+
+                    </p>
+                    <h6>Proposed Solution:</h6>
+                    <p>
+                        @Model.Solution
+                    </p>
+                    <h6>Thesis Statement:</h6>
+                    <p>
+                        @Model.ThesisStatement
+                    </p>
+                    <h6>Submission Date:</h6>
+                    <p>
+                        @Model.SubmissionDate
+                    </p>
+                    <h6>Advisor:</h6>
+                    <p>@Model.Advisor.Academician.AcademicianFirstName @Model.Advisor.Academician.AcademicianLastName</p>
+
+                }
+                else
+                {
+                    <p>This project does not exist.</p>
+                }
+
+                @{
+
+                    using (Html.BeginForm("AcceptProject", "Admin", FormMethod.Post))
+                    {
+                        @Html.Hidden("projectId", Model.ProjectId)
+
+                        if (Model.ProjectStatusId == 1)
+                        {
+                            <!-- Modal accept-->
+
+                            <button type="button" class="btn btn-danger float-end mx-4 px-3 py-2" data-bs-toggle="modal"
+                                    data-bs-target="#staticReject">
+                                Reject
+                            </button>
+                            <button type="button" class="btn btn-success float-end px-3 py-2" data-bs-toggle="modal"
+                                    data-bs-target="#staticAccept">
+                                Accept
+                            </button>
+                            <div class="modal fade" id="staticAccept" data-bs-backdrop="static" data-bs-keyboard="false"
+                                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to accept the project?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="button" class="btn btn-secondary"
+                                                   data-bs-dismiss="modal" value="Cancel" />
+                                            <input type="submit" class="btn btn-primary mx-2"
+                                                   data-bs-dismiss="modal" value="Yes" />
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        }
+                    }
+
+                    using (Html.BeginForm("RejectProject", "Admin", FormMethod.Post))
+                    {
+                        @Html.Hidden("projectId", Model.ProjectId)
+                        <!-- Modal reject-->
+                        <div class="modal fade" id="staticReject" data-bs-backdrop="static" data-bs-keyboard="false"
+                             tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Confirmation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to reject the project?
+                                    </div>
+                                    <div class="modal-body">
+                                        @Html.TextArea("FeedbackMessage", Model.FeedbackMessage, new { @class = "form-control", placeholder = "Enter your feedback here..", style = "height: 8rem" })
+                                        @Html.ValidationMessage("FeedbackMessage", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                               mx-3 value="Cancel" />
+                                        <input type="submit" class="btn btn-primary mx-2"
+                                               data-bs-dismiss="modal" value="Yes" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    if (Model.ProjectStatusId == 2)
+                    {
+                        <p class="text-end fw-bold text-success pe-5 h5">Project Accepted</p>
+                    }
+                    if (Model.ProjectStatusId == 3)
+                    {
+                        <h6 class="text-danger fw-bold">Feedback: </h6>
+                        <p>@Model.FeedbackMessage</p>
+                        <p class="text-end fw-bold text-danger pe-5 h5">Project Rejected</p>
+
+                    }
+
+                    <div>
+
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</main>

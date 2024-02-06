@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="36de9061305c44ac9aa2e4649d2548f4" Name="Diagram1" ZoomLevel="97">
+        <EntityTypeShape EntityType="ITDepartmentDbModel.Academician" Width="1.5" PointX="9.75" PointY="7.25" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.Advisor" Width="1.5" PointX="12" PointY="7.5" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.Campus" Width="1.5" PointX="0.75" PointY="4.125" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.Department" Width="1.5" PointX="5.25" PointY="3.875" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.Faculty" Width="1.5" PointX="3" PointY="3.875" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.Program" Width="1.5" PointX="7.5" PointY="3.75" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.Project" Width="1.5" PointX="14.25" PointY="4.75" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.ProjectStatu" Width="1.5" PointX="12" PointY="4.625" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.Standing" Width="1.5" PointX="7.5" PointY="1.25" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.Student" Width="1.5" PointX="9.75" PointY="3.375" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__Academici__Progr__42E1EEFE" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__Advisors__UserId__4C6B5938" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__Projects__Adviso__531856C7" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__Faculties__Campu__395884C4" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__Departmen__Facul__3C34F16F" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__Programs__Depart__3F115E1A" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__Students__Progra__489AC854" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__Projects__Projec__540C7B00" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__Projects__Studen__5224328E" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__Students__Standi__498EEC8D" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.Appointment" Width="1.5" PointX="12" PointY="0.75" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.AppointmentStatus" Width="1.5" PointX="9.75" PointY="1.375" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__Appointme__Acade__5BAD9CC8" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__Appointme__Appoi__5CA1C101" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__Appointme__Stude__5D95E53A" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.FormPlagiarismReport" Width="1.5" PointX="19.25" PointY="12" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.FormProjectConsultantChangeProposal" Width="1.5" PointX="19.25" PointY="8.375" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.FormProjectConsultantProposal" Width="1.5" PointX="12" PointY="12.375" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.FormProjectDeliveryCertificate" Width="1.5" PointX="22.25" PointY="3.625" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.FormProjectSubjectChangeProposal" Width="1.5" PointX="19.25" PointY="4.75" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.FormProjectTitleProposal" Width="1.5" PointX="22.25" PointY="7.75" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.FormStatus" Width="1.5" PointX="20" PointY="0.75" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.GraduationProject" Width="1.5" PointX="17" PointY="6.75" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormProje__Acade__59904A2C" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormProje__NewAc__68D28DBC" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__Graduatio__Acade__61316BF4" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__Programs__HeadId__76619304" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormPlagi__Proje__056ECC6A" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormProje__FormS__69C6B1F5" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormProje__Proje__67DE6983" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormProje__FormS__5A846E65" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormProje__Progr__5B78929E" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormProje__Stude__589C25F3" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormProje__FormS__7EC1CEDB" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormProje__Proje__7DCDAAA2" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormProje__FormS__7073AF84" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormProje__Proje__6F7F8B4B" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormProje__FormS__7720AD13" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormProje__Proje__762C88DA" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__Graduatio__Progr__6225902D" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__Graduatio__Stude__603D47BB" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.FormThesisConcultantChangeProposal" Width="1.5" PointX="25.25" PointY="5.125" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.FormThesisConsultantProposal" Width="1.5" PointX="25.25" PointY="0.75" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__Advis__1975C517" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__CoAdv__1A69E950" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__NewAd__473C8FC7" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__FormS__1B5E0D89" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__FormS__4830B400" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__Progr__1C5231C2" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__Stude__1881A0DE" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.FormThesisTitleProposal" Width="1.5" PointX="22.25" PointY="0.75" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__FormS__4EDDB18F" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.FormThesisSubjectChangeProposal" Width="1.5" PointX="22.25" PointY="0.75" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__FormS__558AAF1E" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.FormThesisConsultantAndSubjectChangeProposal" Width="1.5" PointX="25.25" PointY="9" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__NewAd__63D8CE75" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__FormS__64CCF2AE" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.FormThesisExtensionProposal" Width="1.5" PointX="22.25" PointY="0.75" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__FormS__6B79F03D" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.FormThesisAssessmentProposal" Width="1.5" PointX="22.25" PointY="0.75" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__FormS__7226EDCC" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.FormThesisPlagiarismReport" Width="1.5" PointX="19.25" PointY="15.375" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.FormThesisDeliveryCertificate" Width="1.5" PointX="22.25" PointY="0.75" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__FormS__062DE679" />
+        <EntityTypeShape EntityType="ITDepartmentDbModel.MasterThes" Width="1.5" PointX="17" PointY="0.75" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__MasterThe__Advis__2116E6DF" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__MasterThe__CoAdv__220B0B18" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__Thesi__7132C993" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__Thesi__46486B8E" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__Thesi__62E4AA3C" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__Thesi__0539C240" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__Thesi__6A85CC04" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__Thesi__7E8CC4B1" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__Thesi__54968AE5" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__FormThesi__Thesi__4DE98D56" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__MasterThe__Progr__22FF2F51" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK__MasterThe__Stude__2022C2A6" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK_FormProje_OldAdvisor" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK_FormProje_FormStatus" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK_FormThesis_OldAdvisor" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK_FormThesis_FormStatus" />
+        <AssociationConnector Association="ITDepartmentDbModel.FK_FormThesisConAndSub_OldAdvisor" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

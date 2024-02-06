@@ -1,0 +1,74 @@
+﻿@model List<InformationTechnologiesDepartmentIS.Models.Project>
+
+@{
+    ViewBag.Title = "RejectedProjects";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid px-4 mt-4">
+    <h3>Rejected Projects</h3>
+    <div class="card mb-4 mt-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Projects
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Student</th>
+                        <th>Advisor</th>
+                        <th>Project Title</th>
+                        <th>Submission Date</th>
+                        <th>Status</th>
+                        <th>View</th>
+
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Number</th>
+                        <th>Student</th>
+                        <th>Advisor</th>
+                        <th>Project Title</th>
+                        <th>Submission Date</th>
+                        <th>Status</th>
+                        <th>View</th>
+
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var project in Model)
+                    {
+                        <tr>
+                            <td>@project.Student.StudentNumber</td>
+                            <td>@project.Student.StudentFirstName @project.Student.StudentLastName</td>
+                            <td>@project.Advisor.Academician.AcademicianFirstName @project.Advisor.Academician.AcademicianLastName</td>
+                            <td><a href='/Admin/GraduationThesisDetail/@project.ProjectId'>@(project.ProjectTitle.Length>=30 ? project.ProjectTitle.Substring(0,30) + "..." : project.ProjectTitle ) </a></td>
+                            <td>@project.SubmissionDate</td>
+                            @if (@project.ProjectStatu.ProjectStatusId == 1)
+                            {
+                                <td><a class="text-warning fw-bold text-decoration-none">@project.ProjectStatu.ProjectStatusName</a></td>
+                            }
+
+                            @if (@project.ProjectStatu.ProjectStatusId == 2)
+                            {
+                                <td><a class="text-success fw-bold text-decoration-none">@project.ProjectStatu.ProjectStatusName</a></td>
+                            }
+
+                            @if (@project.ProjectStatu.ProjectStatusId == 3)
+                            {
+                                <td><a class="text-danger fw-bold text-decoration-none">@project.ProjectStatu.ProjectStatusName</a></td>
+                            }
+                            <td><a href='/Admin/GraduationThesisDetail/@project.ProjectId'><input type="button" value="View" /></a></td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,45 @@
+﻿button.owl-prev {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-80%);
+    border: 2px solid white !important;
+    background: #052970 !important;
+    font-weight: 800;
+    width: 33px;
+    height: 33px;
+    opacity: 0.75;
+    border-radius: 50% !important;
+    color: white !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important; /* Change to 'center' to vertically center the text */
+}
+
+button.owl-next {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-80%);
+    border: 2px solid white !important;
+    background: #052970 !important;
+    font-weight: 800;
+    width: 33px;
+    height: 33px;
+    opacity: 0.75;
+    border-radius: 50% !important;
+    color: white !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important; /* Change to 'center' to vertically center the text */
+}
+  
+
+.owl-dots {
+    display: none;
+}
+
+
+button.owl-prev span, button.owl-next span {
+    font-size: x-large;
+}

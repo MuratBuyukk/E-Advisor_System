@@ -1,0 +1,23 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Register</title>
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+        {
+            <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                <input type="submit" class="btn btn-primary" value="Create User" />
+            </div>
+        }
+    </div>
+</body>
+</html>

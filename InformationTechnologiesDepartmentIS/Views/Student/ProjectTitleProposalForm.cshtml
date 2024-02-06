@@ -1,0 +1,163 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.ViewModels.GraduationProjectViewModels.ProjectTitleProposalViewModel
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+@{
+    var programName = "";
+    var studentNumber = "";
+    var nameSurname = "";
+    var stdntDate = "";
+    var consultantName = "";
+    var projectTitle = "";
+    var cnsltntDate = "";
+    var chairman = "";
+    var chairmanDate = "";
+    MembershipUser currentUser = Membership.GetUser(User.Identity.Name);
+}
+<div class="d-flex justify-content-center align-items-start w-100 row p-4 mx-0 my-0 overflow-hidden">
+    <h4 class="text-center mb-4 fw-bolder alert alert-primary">Project Title Proposal Form</h4>
+    @if (Model.Form.FormStatusId == 0 || Model.Form.FormStatusId == 3 || Model.Form.FormStatusId == 4)
+    {
+        <div class="d-flex flex-column gap-3 p-4 text-black bg-white col col-sm-12 col-md-12 col-xl-4 fw-semibold border border-dark border-opacity-75 border-1" id="form">
+            @using (Html.BeginForm("ProjectTitleProposalForm", "Student", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="col-12">
+                    <p class="form-label fw-bold h4 mb-4 text-primary">
+                        Fill the form
+                    </p>
+
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="inputAddress" class="form-label">
+                        Project Title:
+                    </label>
+                    @Html.TextArea("Title", new { @class = "form-control border border-secondary border-opacity-50", id = "projectTitleInput", placeholder = "Enter the title here..", rows = 4 })
+                    @Html.ValidationMessage("Title", "", new { @class = "text-danger fw-bold" })
+                    @Html.Hidden("ProjectId", Model.GraduationProject.ProjectId, new { id = "projectId" })
+
+
+                </div>
+                <div class="col-12 text-end pt-4">
+                    <button type="submit" class="btn btn-primary fw-bold">Send</button>
+                </div>
+            }
+        </div>
+    }
+    <form class="myform col col-sm-12 col-md-12 col-xl-8 bg-white" id="myform">
+        <table class="table table-bordered align-middle min-vh-100" style="width:auto;  border-color:black">
+            <tr style="height:1em">
+                <td style="text-align: center" colspan="3"><img src="~/Content/images/Logo.png" width="50%" alt="Logo"></td>
+            </tr>
+            <tr style="height:1em">
+                <td colspan="3" class="fw-bold h3" style="color: rgb(39,39,128); text-align: center;">PROJE BAŞLIĞI ÖNERİ FORMU</td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Öğrenci Numarası</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent h-100 w-100 text-dark" type="text" id="studentNumber" name="studentNumber" value="@Model.GraduationProject.Student.StudentNumber" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Adı Soyadı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="nameSurname" name="nameSurname" value="@Model.GraduationProject.Student.StudentFirstName @Model.GraduationProject.Student.StudentLastName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold" style="width: 30%">Kayıtlı olduğu program</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent h-100 w-100 text-dark" type="text" id="programName" name="programName" value="@Model.GraduationProject.ProgramName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Proje Danışmanını</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="consultantName" name="consultantName" value="@Model.GraduationProject.Academician.AcademicianFirstName @Model.GraduationProject.Academician.AcademicianLastName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Başlık (Türkçe)</td>
+                <td colspan="2">
+                    <textarea rows="3" class="border-0 bg-transparent w-100 text-dark" style="resize:none" id="projectTitle" name="projectTitle" disabled>@(Model.Form.FormStatusId == 4 || Model.Form.FormStatusId == 3 ? null : Model.Form.Title)</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <span style="text-align: center;">
+                        <p style="text-transform: uppercase; font-weight: bold;">
+                            @Model.GraduationProject.ProgramName ANABİLİM DALI BAŞKANLIĞI'NA
+                        </p>
+                        <br />
+                        <p>
+                            Yukarıda kimliği belirtilen öğrenci için belirlenen proje başlığı tarafımdan kontrol edilerek
+                            onaylanmıştır. Enstitü Yönetim Kurulunda görüşülebilmesi için gereğini arz ederim. .… /…. /…….
+                        </p>
+                    </span>
+                    <table class="table table-borderless" style="text-align: center">
+                        <br />
+                        <tr>
+                            <td>Öğrencinin adı:<br /> @Model.GraduationProject.Student.StudentFirstName @Model.GraduationProject.Student.StudentLastName</td>
+                            <td>Danışmanın Öğretim Üyesi:<br /> @Model.GraduationProject.Academician.AcademicianFirstName @Model.GraduationProject.Academician.AcademicianLastName</td>
+                        </tr>
+                        <tr>
+                            <td>İmza: </td>
+                            <td>İmza: </td>
+                        </tr>
+                    </table>
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <span style="text-align: center;">
+                        <p style="text-transform: uppercase; font-weight: bold;">
+                            LİSANSÜSTÜ EĞİTİM ENSTİTÜSÜ MÜDÜRLÜĞÜ’NE
+                        </p>
+                        <br />
+                        <p>
+                            Yukarıda kimliği belirtilen öğrenciye danışmanı tarafından öğrencinin de görüşleri dikkate alınarak
+                            belirlenen proje başlığının Enstitü Yönetim Kurulunda görüşülmesi için gereğini arz ederim. .… /…. /…….
+                        </p>
+                        <br />
+                        <br />
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </form>
+    @if (Model.Form.FormStatusId == 2)
+    {
+        <div class="text-center mt-3">
+            <button type="button" class="btn btn-primary" onclick="printDiv()">Print</button>
+        </div>
+    }
+</div>
+
+
+<script>
+    function printDiv() {
+        var printContents = document.getElementById('myform').innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+</script>
+
+<script>
+    const form = document.getElementById('form');
+
+    form.addEventListener('input', function (event) {
+        const targetInput = event.target;
+        const inputText = targetInput.value;
+        if (targetInput.id === 'projectTitleInput') {
+            const projectTopic = document.getElementById('projectTitle');
+            projectTopic.value = inputText;
+        }
+    });
+
+</script>
+
+

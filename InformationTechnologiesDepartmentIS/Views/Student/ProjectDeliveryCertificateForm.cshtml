@@ -1,0 +1,219 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.ViewModels.GraduationProjectViewModels.ProjectDeliveryDateViewModel
+@{
+    ViewBag.Title = "DeliveryCertificateForm";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+@{
+    var programName = "";
+    var studentNumber = "";
+    var nameSurname = "";
+    var stdntDate = "";
+    var consultantName = "";
+    var title = "";
+    var cnsltntDate = "";
+    var chairman = "";
+    var chairmanDate = "";
+    var deliveryDate = "";
+    var projectLangauge = "";
+    MembershipUser currentUser = Membership.GetUser(User.Identity.Name);
+}
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#deliveryDateInput").datepicker({
+            dateFormat: "yy-mm-dd",
+            changeMonth: true,
+            changeYear: true
+        });
+    });
+</script>
+<div class="d-flex justify-content-center align-items-start w-100 row p-4 mx-0 my-0 overflow-hidden">
+    <h4 class="text-center mb-4 fw-bolder alert alert-primary">Project Delivery Certificate Form</h4>
+    @if (Model.Form.FormStatusId == 0 || Model.Form.FormStatusId == 3 || Model.Form.FormStatusId == 4)
+    {
+        <div class="d-flex flex-column gap-3 p-4 text-black bg-white col col-sm-12 col-md-12 col-xl-4 fw-semibold border border-dark border-opacity-75 border-1" id="form">
+            @using (Html.BeginForm("ProjectDeliveryCertificateForm", "Student", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("ProjectId", Model.GraduationProject.ProjectId)
+                <div class="col-12">
+                    <p class="form-label fw-bold h4 mb-4 text-primary">
+                        Fill the form
+                    </p>
+                    <label for="inputAddress" class="form-label">
+                        Project Delivery Date:
+                    </label>
+                    <br />
+                    @Html.TextBox("DeliveryDate", "", new
+                    {
+                        @id = "deliveryDateInput",
+                        @class = "form-control w-100",
+                        @type = "text",
+                        onchange = "updateDeliveryDate()",
+                        placeholder = "Select delivery date"
+                    })
+                    @Html.ValidationMessage("DeliveryDate", "", new { @class = "text-danger fw-bold" })
+
+
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="inputAddress" class="form-label">
+                        Project Language:
+                    </label>
+                    @{
+                        var languageList = new List<SelectListItem>
+                                    {
+                        new SelectListItem { Text = "Turkish", Value = "false" , Selected = false },
+                        new SelectListItem { Text = "English", Value = "true" , Selected = false }
+                    };
+                    }
+
+                    @Html.DropDownList("IsEnglish", languageList, "Select a language", new { @class = "form-select border border-secondary border-opacity-50", id = "languageDropdown", onchange = "updateLangaugeText()" })
+                    @Html.ValidationMessage("IsEnglish", "", new { @class = "text-danger fw-bold" })
+
+                </div>
+
+                <div class="col-12 text-end pt-4">
+                    <input type="submit" class="btn btn-primary fw-bold" value="Send" />
+                </div>
+            }
+        </div>
+    }
+    <form class="myform col col-sm-12 col-md-12 col-xl-8 bg-white" id="myform">
+        <table class="table table-bordered align-middle min-vh-100" style="width:auto;  border-color:black">
+            <tr style="height:1em">
+                <td colspan="2"><img src="~/Content/images/Logo.png" width="100%" alt="Logo"></td>
+                <td class="fw-bold h3" style="color: rgb(39,39,128); text-align: center;">PROJE TESLİM TUTANAĞI</td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Program Adı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent h-100 w-100 text-dark" type="text" id="programName" name="programName" value="@Model.GraduationProject.ProgramName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Öğrenci Numarası</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent h-100 w-100 text-dark" type="text" id="studentNumber" name="studentNumber" value="@Model.GraduationProject.Student.StudentNumber" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Adı Soyadı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="nameSurname" name="nameSurname" value="@Model.GraduationProject.Student.StudentFirstName @Model.GraduationProject.Student.StudentLastName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Proje Başlığı</td>
+                <td colspan="2">
+                    <textarea rows="3" class="border-0 bg-transparent w-100 text-dark align-middle" style="resize:none" id="title" name="title" disabled>@Model.GraduationProject.Title</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Proje Teslim Tarih</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent text-dark" type="text" id="deliveryDate" name="deliveryDate" value="@(Model.Form.FormStatusId == 4 || Model.Form.FormStatusId == 3 ? null : Model.Form.DeliveryDate.ToString("dd.MM.yyyy"))" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Proje Yazılım Dili</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent text-dark" type="text" id="projectLanguage" name="projectLanguage" value="@(Model.Form.FormStatusId == 4 || Model.Form.FormStatusId == 3 ? null : (Model.Form.IsEnglish == true ? "İngilizce" : "Türkçe"))" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Öğrenci İmza</td>
+                <td>
+                    <input class="border-0 bg-transparent text-dark" type="text" id="chairmanDate" name="chairmanDate" value="@chairmanDate" disabled />
+                </td>
+                <td>
+                    İmza :
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    Yukarıda adı ve soyadı yazılı öğrencinin istenen formatta hazırlanan projesi kontrol edilmiş olup Lisansüstü
+                    Eğitim Enstitüsü’ne teslimi uygundur.
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Proje Danışmanının Ünvanı, Adı ve Soyadı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="consultantName" name="consultantName" value="@Model.GraduationProject.Academician.AcademicianFirstName @Model.GraduationProject.Academician.AcademicianLastName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">E-mail</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="e-mail" name="e-mail" value="@Model.GraduationProject.Academician.AcademicianEmail" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Telefon</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="telephone" name="telephone" value="@Model.GraduationProject.Academician.RoomNo" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Onay Tarihi</td>
+                <td>
+                    <input class="border-0 bg-transparent text-dark" type="text" id="cnsltntDate" name="cnsltntDate" value="@cnsltntDate" disabled />
+                </td>
+                <td>
+                    İmza:
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    Lisansüstü Eğitim Enstitüsü İletişim Bilgileri <br />
+                    444 07 99 / 6128-6129-6105 <a href="#">lee@isikun.edu.tr</a>
+                </td>
+            </tr>
+        </table>
+
+    </form>
+    @if (Model.Form.FormStatusId == 2)
+    {
+        <div class="text-center mt-3">
+            <button type="button" class="btn btn-primary" onclick="printDiv()">Print</button>
+        </div>
+    }
+</div>
+
+
+<script>
+    function printDiv() {
+        var printContents = document.getElementById('myform').innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+</script>
+
+<script>
+    const form = document.getElementById('form');
+
+
+    function updateDeliveryDate() {
+        var selectedDateInput = document.getElementById("deliveryDateInput");
+        var selectedText = selectedDateInput.value;
+        var consultantNameInput = document.getElementById("deliveryDate");
+        consultantNameInput.value = selectedText;
+    }
+
+
+
+    function updateLangaugeText() {
+        var selectedOption = document.getElementById("languageDropdown").options[document.getElementById("languageDropdown").selectedIndex];
+        var selectedText = selectedOption.text;
+        var consultantNameInput = document.getElementById("projectLanguage");
+        consultantNameInput.value = selectedText;
+
+    }
+</script>
+
+

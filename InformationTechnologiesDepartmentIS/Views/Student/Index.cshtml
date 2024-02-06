@@ -1,0 +1,27 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.Student
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+
+<main>
+    <div class="container-fluid px-5">
+        <h2 class="mt-4">Student Information System</h2>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="/Student/Index">Homepage</a></li>
+            <l class="breadcrumb-item active">Welcome</l>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-body">
+                <p class="mb-3 fw-bold text-primary">
+                    Welcome @(Model?.StudentFirstName) @(Model?.StudentLastName)
+                </p>
+                <p>
+                    This is a comprehensive information system implementation within the Information
+                    Technology department, aiming to digitize and automate various processes, including internships, graduation projects, and academic appointments, offers a proactive solution to address the common communication challenges faced by both students and faculty, thereby enhancing efficiency and organizing these critical educational efforts.
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+

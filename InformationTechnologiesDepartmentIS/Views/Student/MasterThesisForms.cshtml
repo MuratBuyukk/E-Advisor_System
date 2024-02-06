@@ -1,0 +1,462 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.ViewModels.MasterThesisViewModels.ThesisFormsViewModel
+
+@{
+    ViewBag.Title = "MasterThesisForms";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+
+
+}
+<head>
+    <link href="~/Content/css/graduation-project.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<div class="col p-3">
+    <div class="card">
+        <div class="card-header border-0">
+            <h2 class="mb-0">Master's Thesis Forms</h2>
+        </div>
+        <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Forms</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Advisor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.thesisExist)
+                    {
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <span class="avatar rounded-circle mr-3">
+                                        <i class="fa-brands fa-wpforms"></i>
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="/Student/ThesisAdvisorProposalForm" class="mb-0 text-sm">Master Thesis Advisor Proposal Form </a>
+                                    </div>
+                                </div>
+                            </th>
+                            <td>
+                                <span class="badge badge-dot mr-4">
+                                    @if (Model?.FormThesisConsultantProposal?.FormStatusId == 1)
+                                    {
+                                        <a class="bg-warning text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Pending</a>
+                                    }
+                                    else if (Model?.FormThesisConsultantProposal?.FormStatusId == 2)
+                                    {
+                                        <a class="bg-success text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Accepted</a>
+                                    }
+                                    else if (Model?.FormThesisConsultantProposal?.FormStatusId == 3)
+                                    {
+                                        <a class="bg-danger text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Rejected</a>
+                                    }
+                                    else if (Model?.FormThesisConsultantProposal?.FormStatusId == 4)
+                                    {
+                                        <a class="bg-info text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Approved</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="bg-dark opacity-50 text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Blank</a>
+                                    }
+                                </span>
+                            </td>
+                            <td> 
+                                <div class="avatar-group">
+                                    @Model.AdvisorFullName
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <span class="avatar rounded-circle mr-3">
+                                        <i class="fa-brands fa-wpforms"></i>
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="/Student/ThesisAdvisorChangeProposalForm" class="mb-0 text-sm">Master Thesis Advisor Change Proposal Form </a>
+                                    </div>
+                                </div>
+                            </th>
+                            <td>
+                                <span class="badge badge-dot mr-4">
+                                    @if (Model?.FormThesisConsultantChangeProposal?.FormStatusId == 1)
+                                    {
+                                        <a class="bg-warning text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Pending</a>
+                                    }
+                                    else if (Model?.FormThesisConsultantChangeProposal?.FormStatusId == 2)
+                                    {
+                                        <a class="bg-success text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Accepted</a>
+                                    }
+                                    else if (Model?.FormThesisConsultantChangeProposal?.FormStatusId == 3)
+                                    {
+                                        <a class="bg-danger text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Rejected</a>
+                                    }
+                                    else if (Model?.FormThesisConsultantChangeProposal?.FormStatusId == 4)
+                                    {
+                                        <a class="bg-info text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Approved</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="bg-dark opacity-50 text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Blank</a>
+                                    }
+                                </span>
+                            </td>
+                            <td>
+                                <div class="avatar-group">
+                                    @Model.AdvisorFullName
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <span class="avatar rounded-circle mr-3">
+                                        <i class="fa-brands fa-wpforms"></i>
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="/Student/ThesisTitleProposalForm" class="mb-0 text-sm">Master Thesis Title Proposal Form </a>
+                                    </div>
+                                </div>
+                            </th>
+                            <td>
+                                <span class="badge badge-dot mr-4">
+                                    @if (Model?.FormThesisTitleProposal?.FormStatusId == 1)
+                                    {
+                                        <a class="bg-warning text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Pending</a>
+                                    }
+                                    else if (Model?.FormThesisTitleProposal?.FormStatusId == 2)
+                                    {
+                                        <a class="bg-success text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Accepted</a>
+                                    }
+                                    else if (Model?.FormThesisTitleProposal?.FormStatusId == 3)
+                                    {
+                                        <a class="bg-danger text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Rejected</a>
+                                    }
+                                    else if (Model?.FormThesisTitleProposal?.FormStatusId == 4)
+                                    {
+                                        <a class="bg-info text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Approved</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="bg-dark opacity-50 text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Blank</a>
+                                    }
+                                </span>
+                            </td>
+                            <td>
+                                <div class="avatar-group">
+                                    @Model.AdvisorFullName
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <span class="avatar rounded-circle mr-3">
+                                        <i class="fa-brands fa-wpforms"></i>
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="/Student/ThesisSubjectChangeProposalForm" class="mb-0 text-sm">Master Thesis Subject Change Proposal Form </a>
+                                    </div>
+                                </div>
+                            </th>
+                            <td>
+                                <span class="badge badge-dot mr-4">
+                                    @if (Model?.FormThesisSubjectChangeProposal?.FormStatusId == 1)
+                                    {
+                                        <a class="bg-warning text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Pending</a>
+                                    }
+                                    else if (Model?.FormThesisSubjectChangeProposal?.FormStatusId == 2)
+                                    {
+                                        <a class="bg-success text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Accepted</a>
+                                    }
+                                    else if (Model?.FormThesisSubjectChangeProposal?.FormStatusId == 3)
+                                    {
+                                        <a class="bg-danger text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Rejected</a>
+                                    }
+                                    else if (Model?.FormThesisSubjectChangeProposal?.FormStatusId == 4)
+                                    {
+                                        <a class="bg-info text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Approved</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="bg-dark opacity-50 text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Blank</a>
+                                    }
+                                </span>
+                            </td>
+                            <td>
+                                <div class="avatar-group">
+                                    @Model.AdvisorFullName
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <span class="avatar rounded-circle mr-3">
+                                        <i class="fa-brands fa-wpforms"></i>
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="/Student/ThesisAdvisorAndSubjectChangeProposalForm" class="mb-0 text-sm">Master Thesis Advisor And Subject Change Proposal Form </a>
+                                    </div>
+                                </div>
+                            </th>
+                            <td>
+                                <span class="badge badge-dot mr-4">
+                                    @if (Model?.FormThesisConsultantAndSubjectChange?.FormStatusId == 1)
+                                    {
+                                        <a class="bg-warning text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Pending</a>
+                                    }
+                                    else if (Model?.FormThesisConsultantAndSubjectChange?.FormStatusId == 2)
+                                    {
+                                        <a class="bg-success text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Accepted</a>
+                                    }
+                                    else if (Model?.FormThesisConsultantAndSubjectChange?.FormStatusId == 3)
+                                    {
+                                        <a class="bg-danger text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Rejected</a>
+                                    }
+                                    else if (Model?.FormThesisConsultantAndSubjectChange?.FormStatusId == 4)
+                                    {
+                                        <a class="bg-info text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Approved</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="bg-dark opacity-50 text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Blank</a>
+                                    }
+                                </span>
+                            </td>
+                            <td>
+                                <div class="avatar-group">
+                                    @Model.AdvisorFullName
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <span class="avatar rounded-circle mr-3">
+                                        <i class="fa-brands fa-wpforms"></i>
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="/Student/ThesisExtensionProposalForm" class="mb-0 text-sm">Master Thesis Extension Proposal Form </a>
+                                    </div>
+                                </div>
+                            </th>
+                            <td>
+                                <span class="badge badge-dot mr-4">
+                                    @if (Model?.FormThesisExtensionProposal?.FormStatusId == 1)
+                                    {
+                                        <a class="bg-warning text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Pending</a>
+                                    }
+                                    else if (Model?.FormThesisExtensionProposal?.FormStatusId == 2)
+                                    {
+                                        <a class="bg-success text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Accepted</a>
+                                    }
+                                    else if (Model?.FormThesisExtensionProposal?.FormStatusId == 3)
+                                    {
+                                        <a class="bg-danger text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Rejected</a>
+                                    }
+                                    else if (Model?.FormThesisExtensionProposal?.FormStatusId == 4)
+                                    {
+                                        <a class="bg-info text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Approved</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="bg-dark opacity-50 text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Blank</a>
+                                    }
+                                </span>
+                            </td>
+                            <td>
+                                <div class="avatar-group">
+                                    @Model.AdvisorFullName
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <span class="avatar rounded-circle mr-3">
+                                        <i class="fa-brands fa-wpforms"></i>
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="/Student/ThesisAssessmentProposalForm" class="mb-0 text-sm">Master Thesis Assessment Proposal Form </a>
+                                    </div>
+                                </div>
+                            </th>
+                            <td>
+                                <span class="badge badge-dot mr-4">
+                                    @if (Model?.FormThesisAssessmentProposal?.FormStatusId == 1)
+                                    {
+                                        <a class="bg-warning text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Pending</a>
+                                    }
+                                    else if (Model?.FormThesisAssessmentProposal?.FormStatusId == 2)
+                                    {
+                                        <a class="bg-success text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Accepted</a>
+                                    }
+                                    else if (Model?.FormThesisAssessmentProposal?.FormStatusId == 3)
+                                    {
+                                        <a class="bg-danger text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Rejected</a>
+                                    }
+                                    else if (Model?.FormThesisAssessmentProposal?.FormStatusId == 4)
+                                    {
+                                        <a class="bg-info text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Approved</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="bg-dark opacity-50 text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Blank</a>
+                                    }
+                                </span>
+                            </td>
+                            <td>
+                                <div class="avatar-group">
+                                    @Model.AdvisorFullName
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <span class="avatar rounded-circle mr-3">
+                                        <i class="fa-brands fa-wpforms"></i>
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="/Student/ThesisPlagiarismReportForm" class="mb-0 text-sm">Master Thesis Plagiarism Report Form </a>
+                                    </div>
+                                </div>
+                            </th>
+                            <td>
+                                <span class="badge badge-dot mr-4">
+                                    @if (Model?.FormThesisPlagiarismReport?.FormStatusId == 1)
+                                    {
+                                        <a class="bg-warning text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Pending</a>
+                                    }
+                                    else if (Model?.FormThesisPlagiarismReport?.FormStatusId == 2)
+                                    {
+                                        <a class="bg-success text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Accepted</a>
+                                    }
+                                    else if (Model?.FormThesisPlagiarismReport?.FormStatusId == 3)
+                                    {
+                                        <a class="bg-danger text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Rejected</a>
+                                    }
+                                    else if (Model?.FormThesisPlagiarismReport?.FormStatusId == 4)
+                                    {
+                                        <a class="bg-info text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Approved</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="bg-dark opacity-50 text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Blank</a>
+                                    }
+                                </span>
+                            </td>
+                            <td>
+                                <div class="avatar-group">
+                                    @Model.AdvisorFullName
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <span class="avatar rounded-circle mr-3">
+                                        <i class="fa-brands fa-wpforms"></i>
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="/Student/ThesisDeliveryCertificateForm" class="mb-0 text-sm">Master Thesis Delivery Certificate Form </a>
+                                    </div>
+                                </div>
+                            </th>
+                            <td>
+                                <span class="badge badge-dot mr-4">
+                                    @if (Model?.FormThesisDeliveryCertificate?.FormStatusId == 1)
+                                    {
+                                        <a class="bg-warning text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Pending</a>
+                                    }
+                                    else if (Model?.FormThesisDeliveryCertificate?.FormStatusId == 2)
+                                    {
+                                        <a class="bg-success text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Accepted</a>
+                                    }
+                                    else if (Model?.FormThesisDeliveryCertificate?.FormStatusId == 3)
+                                    {
+                                        <a class="bg-danger text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Rejected</a>
+                                    }
+                                    else if (Model?.FormThesisDeliveryCertificate?.FormStatusId == 4)
+                                    {
+                                        <a class="bg-info text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Approved</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="bg-dark opacity-50 text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Blank</a>
+                                    }
+                                </span>
+                            </td>
+                            <td>
+                                <div class="avatar-group">
+                                    @Model.AdvisorFullName
+
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                <tr>
+                    <th scope="row">
+                        <div class="media align-items-center">
+                            <span class="avatar rounded-circle mr-3">
+                                <i class="fa-brands fa-wpforms"></i>
+                            </span>
+                            <div class="media-body">
+                                <a href="/Student/ThesisAdvisorProposalForm" class="mb-0 text-sm">Master Thesis Advisor Proposal Form</a>
+                            </div>
+                        </div>
+                    </th>
+                    <td>
+                        <span class="badge badge-dot mr-4">
+                            @if (Model?.FormThesisConsultantProposal?.FormStatusId == 1)
+                            {
+                                <a class="bg-warning text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Pending</a>
+                            }
+                            else if (Model?.FormThesisConsultantProposal?.FormStatusId == 2)
+                            {
+                                <a class="bg-success text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Accepted</a>
+                            }
+                            else if (Model?.FormThesisConsultantProposal?.FormStatusId == 3)
+                            {
+                                <a class="bg-danger text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Rejected</a>
+                            }
+                            else if (Model?.FormThesisConsultantProposal?.FormStatusId == 4)
+                            {
+                                <a class="bg-info text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Approved</a>
+                            }
+                            else
+                            {
+                                <a class="bg-dark opacity-50 text-white p-1 px-2 fw-bold rounded-5 small text-decoration-none">Blank</a>
+                            }
+                        </span>
+                    </td>
+                    <td>
+                        <div class="avatar-group">
+                            @Model.AdvisorFullName
+
+                        </div>
+                    </td>
+                </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

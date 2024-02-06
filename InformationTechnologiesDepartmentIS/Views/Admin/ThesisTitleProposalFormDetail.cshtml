@@ -1,0 +1,139 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.FormThesisTitleProposal
+
+@{
+    ViewBag.Title = "ThesisTitleProposalFormDetail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container py-4">
+    <form class="myform col col-sm-12 col-md-12 col-xl-8 bg-white m-auto" id="myform">
+        <table class="table table-bordered align-middle min-vh-100" style="width:auto;  border-color:black">
+            <tr style="height:1em">
+                <td style="text-align: center" colspan="3"><img src="~/Content/images/Logo.png" width="50%" alt="Logo"></td>
+            </tr>
+            <tr style="height:1em">
+                <td colspan="3" class="fw-bold h3" style="color: rgb(39,39,128); text-align: center;">TEZ BAŞLIĞI ÖNERİ FORMU</td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Öğrenci Numarası</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent h-100 w-100 text-dark" type="text" id="studentNumber" name="studentNumber" value="@Model.MasterThes.Student.StudentNumber" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Adı Soyadı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="nameSurname" name="nameSurname" value="@Model.MasterThes.Student.StudentFirstName @Model.MasterThes.Student.StudentLastName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold" style="width: 30%">Kayıtlı olduğu program</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent h-100 w-100 text-dark" type="text" id="programName" name="programName" value="@Model.MasterThes.Program.ProgramName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Proje Danışmanı</td>
+                <td colspan="2">
+                    <input class="border-0 bg-transparent w-100 text-dark" type="text" id="consultantName" name="consultantName" value="@Model.MasterThes.Academician.AcademicianFirstName @Model.MasterThes.Academician.AcademicianLastName" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end fw-bold">Başlık (Türkçe)</td>
+                <td colspan="2">
+                    <textarea rows="3" class="border-0 bg-transparent w-100 text-dark align-middle" style="resize:none" id="projectTitle" name="projectTitle" disabled>@Model.Title</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <span style="text-align: center;">
+                        <p style="text-transform: uppercase; font-weight: bold;">
+                            @Model.MasterThes.Program.ProgramName ANABİLİM DALI BAŞKANLIĞI'NA
+                        </p>
+                        <br />
+                        <p>
+                            Yukarıda kimliği belirtilen öğrenci için belirlenen tez başlığı tarafımdan kontrol edilerek onaylanmıştır.
+                            Enstitü Yönetim Kurulunda görüşülebilmesi için gereğini arz ederim. .… /…. /…….
+                        </p>
+                    </span>
+                    <br />
+                    <table class="table table-borderless" style="text-align: center">
+                        <tr>
+                            <td>Öğrencinin adı: @Model.MasterThes.Student.StudentFirstName @Model.MasterThes.Student.StudentLastName</td>
+                            <td>Danışmanın adı: @Model.MasterThes.Academician.AcademicianFirstName @Model.MasterThes.Academician.AcademicianLastName</td>
+                        </tr>
+                        <tr>
+                            <td>İmza: </td>
+                            <td>İmza: </td>
+                        </tr>
+                    </table>
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <span style="text-align: center;">
+                        <p style="text-transform: uppercase; font-weight: bold;">
+                            LİSANSÜSTÜ EĞİTİM ENSTİTÜSÜ MÜDÜRLÜĞÜ’NE
+                        </p>
+                        <br />
+                        <p>
+                            Yukarıda kimliği belirtilen öğrenciye danışmanı tarafından öğrencinin de görüşleri dikkate alınarak
+                            belirlenen tez başlığının Enstitü Yönetim Kurulunda görüşülmesi için gereğini arz ederim. .… /…. /…….
+                        </p>
+                    </span>
+                    <br />
+                    <p style="margin-left: 55%">Anabilim Dalı Başkanı: @Model.MasterThes.Program.Academician.AcademicianFirstName @Model.MasterThes.Program.Academician.AcademicianLastName</p>
+                    <p style="margin-left: 65%">İmza: </p>
+
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    @using (Html.BeginForm("UpdateThesisTitleProposalStatus", "Admin", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("formId", Model.FormId)
+        if (Model.FormStatus.StatusName == "Pending")
+        {
+            <div class="d-flex justify-content-evenly p-3">
+                <button class="btn btn-success" name="statusId" value="2">Accept</button>
+                <button class="btn btn-danger" name="statusId" value="3">Reject</button>
+            </div>
+        }
+        else if (Model.FormStatus.StatusName == "Accepted")
+        {
+            <div class="d-flex justify-content-evenly p-3">
+                <button class="btn btn-primary" name="statusId" value="4">Approve</button>
+            </div>
+            <div class="text-center mt-3">
+                <button type="button" class="btn btn-primary" onclick="printDiv()">Print</button>
+            </div>
+        }
+        else if (Model.FormStatus.StatusName == "Rejected")
+        {
+            <div class="alert alert-danger text-center h5 fw-bold w-75 m-auto">Project Rejected</div>
+        }
+        else if (Model.FormStatus.StatusName == "Approved")
+        {
+            <div class="alert alert-primary text-center h5 fw-bold w-75 m-auto">Project Approved</div>
+            <div class="text-center mt-3">
+                <button type="button" class="btn btn-primary" onclick="printDiv()">Print</button>
+            </div>
+        }
+    }
+</div>
+
+<script>
+    function printDiv() {
+        var printContents = document.getElementById('myform').innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+</script>
+
+
+

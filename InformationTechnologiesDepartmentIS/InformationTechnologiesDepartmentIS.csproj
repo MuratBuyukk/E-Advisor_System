@@ -1,0 +1,576 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{77FE2B59-7472-476C-BDA9-294134BD8295}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>InformationTechnologiesDepartmentIS</RootNamespace>
+    <AssemblyName>InformationTechnologiesDepartmentIS</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44316</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.2.0.1\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AdministratorController.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Academician.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Advisor.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Appointment.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AppointmentStatus.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Campus.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Department.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Faculty.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormPlagiarismReport.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormProjectConsultantChangeProposal.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormProjectConsultantProposal.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormProjectDeliveryCertificate.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormProjectSubjectChangeProposal.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormProjectTitleProposal.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormStatus.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormThesisAssessmentProposal.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormThesisConcultantChangeProposal.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormThesisConsultantAndSubjectChangeProposal.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormThesisConsultantProposal.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormThesisDeliveryCertificate.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormThesisExtensionProposal.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormThesisPlagiarismReport.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormThesisSubjectChangeProposal.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormThesisTitleProposal.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GraduationProject.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InformationTechnologiesDepartmentIS_DB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InformationTechnologiesDepartmentIS_DB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InformationTechnologiesDepartmentIS_DB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MasterThes.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Program.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Project.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProjectStatu.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Standing.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Student.cs">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModels\AddUserViewModel.cs" />
+    <Compile Include="Models\ViewModels\AppointmentViewModel.cs" />
+    <Compile Include="Models\ViewModels\GraduationProjectViewModels\ProjectConsultantChangeProposalViewModel.cs" />
+    <Compile Include="Models\ViewModels\GraduationProjectViewModels\ProjectConsultantProposalViewModel.cs" />
+    <Compile Include="Models\ViewModels\GraduationProjectViewModels\ProjectDeliveryDateViewModel.cs" />
+    <Compile Include="Models\ViewModels\GraduationProjectViewModels\ProjectFormsViewModel.cs" />
+    <Compile Include="Models\ViewModels\GraduationProjectViewModels\ProjectPlagiarismReportViewModel.cs" />
+    <Compile Include="Models\ViewModels\GraduationProjectViewModels\ProjectSubjectChangeProposalViewModel.cs" />
+    <Compile Include="Models\ViewModels\GraduationProjectViewModels\ProjectTitleProposalViewModel.cs" />
+    <Compile Include="Models\ViewModels\GraduationProjectViewModels\ProjectViewModel.cs" />
+    <Compile Include="Models\ViewModels\MasterThesisViewModels\ThesisConsultantAndSubjectChangeViewModel.cs" />
+    <Compile Include="Models\ViewModels\MasterThesisViewModels\ThesisAssessmentProposalViewModel.cs" />
+    <Compile Include="Models\ViewModels\MasterThesisViewModels\ThesisConsultantChangeProposalViewModel.cs" />
+    <Compile Include="Models\ViewModels\MasterThesisViewModels\ThesisConsultantProposalViewModel.cs" />
+    <Compile Include="Models\ViewModels\MasterThesisViewModels\ThesisDeliveryDateViewModel.cs" />
+    <Compile Include="Models\ViewModels\MasterThesisViewModels\ThesisExtensionProposalViewModel.cs" />
+    <Compile Include="Models\ViewModels\MasterThesisViewModels\ThesisFormsViewModel.cs" />
+    <Compile Include="Models\ViewModels\MasterThesisViewModels\ThesisPlagiarismReportViewModel.cs" />
+    <Compile Include="Models\ViewModels\MasterThesisViewModels\ThesisSubjectChangeProposalViewModel.cs" />
+    <Compile Include="Models\ViewModels\MasterThesisViewModels\ThesisTitleProposalViewModel.cs" />
+    <Compile Include="Models\ViewModels\MasterThesisViewModels\ThesisViewModel.cs" />
+    <Compile Include="Models\ViewModels\ProjectCountsViewModel.cs" />
+    <Compile Include="Models\ViewModels\ProjectAdvisorViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\Abstract\IDatabaseBusiness.cs" />
+    <Compile Include="Repository\Concrete\AcademicianBusiness.cs" />
+    <Compile Include="Repository\Concrete\AdvisorBusiness.cs" />
+    <Compile Include="Repository\Concrete\AppointmentBusiness.cs" />
+    <Compile Include="Repository\Concrete\AppointmentStatusBusiness.cs" />
+    <Compile Include="Repository\Concrete\CampusBusiness.cs" />
+    <Compile Include="Repository\Concrete\DepartmentBusiness.cs" />
+    <Compile Include="Repository\Concrete\FacultyBusiness.cs" />
+    <Compile Include="Repository\Concrete\MasterProjects\FormPlagiarismReportBusiness.cs" />
+    <Compile Include="Repository\Concrete\MasterProjects\FormProjectConsultantChangeProposalBusiness.cs" />
+    <Compile Include="Repository\Concrete\MasterProjects\FormProjectConsultantProposalBusiness.cs" />
+    <Compile Include="Repository\Concrete\MasterProjects\FormProjectDeliveryCertificateBusiness.cs" />
+    <Compile Include="Repository\Concrete\MasterProjects\FormProjectSubjectChangeProposalBusiness.cs" />
+    <Compile Include="Repository\Concrete\MasterProjects\FormProjectTitleProposalBusiness.cs" />
+    <Compile Include="Repository\Concrete\FormStatusBusiness.cs" />
+    <Compile Include="Repository\Concrete\MasterProjects\GraduationProjectBusiness.cs" />
+    <Compile Include="Repository\Concrete\MasterTheses\FormThesisAssessmentBusiness.cs" />
+    <Compile Include="Repository\Concrete\MasterTheses\FormThesisConsultantAndSubjectChangeBusiness.cs" />
+    <Compile Include="Repository\Concrete\MasterTheses\FormThesisConsultantChangeProposalBusiness.cs" />
+    <Compile Include="Repository\Concrete\MasterTheses\FormThesisConsultantProposalBusiness.cs" />
+    <Compile Include="Repository\Concrete\MasterTheses\FormThesisDeliveryCertificateBusiness.cs" />
+    <Compile Include="Repository\Concrete\MasterTheses\FormThesisExtensionProposalBusiness.cs" />
+    <Compile Include="Repository\Concrete\MasterTheses\FormThesisPlagiarismReportBusiness.cs" />
+    <Compile Include="Repository\Concrete\MasterTheses\FormThesisSubjectChangeProposalBusiness.cs" />
+    <Compile Include="Repository\Concrete\MasterTheses\FormThesisTitleProposalBusiness.cs" />
+    <Compile Include="Repository\Concrete\MasterTheses\MasterThesisBusiness.cs" />
+    <Compile Include="Repository\Concrete\ProgramBusiness.cs" />
+    <Compile Include="Repository\Concrete\ProjectBusiness.cs" />
+    <Compile Include="Repository\Concrete\ProjectStatusBusiness.cs" />
+    <Compile Include="Repository\Concrete\StandingBusiness.cs" />
+    <Compile Include="Repository\Concrete\StudentBusiness.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-grid.rtl.css" />
+    <Content Include="Content\bootstrap-grid.rtl.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap-reboot.rtl.css" />
+    <Content Include="Content\bootstrap-reboot.rtl.min.css" />
+    <Content Include="Content\bootstrap-utilities.css" />
+    <Content Include="Content\bootstrap-utilities.min.css" />
+    <Content Include="Content\bootstrap-utilities.rtl.css" />
+    <Content Include="Content\bootstrap-utilities.rtl.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap.rtl.css" />
+    <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\css\appointment-styles.css" />
+    <Content Include="Content\css\graduation-project.css" />
+    <Content Include="Content\css\styles.css" />
+    <Content Include="Content\css\slider.css" />
+    <Content Include="Content\css\styles_std.css" />
+    <Content Include="Content\images\Logo.png" />
+    <Content Include="Content\js\datatables-simple-demo.js" />
+    <Content Include="Content\js\slider.js" />
+    <Content Include="Content\js\scripts.js" />
+    <Content Include="Content\js\scripts_std.js" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-grid.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-grid.rtl.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-reboot.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-reboot.min.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-utilities.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-utilities.min.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap.min.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap.rtl.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap.rtl.min.css" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.esm.js" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.esm.min.js" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.js" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <Content Include="Content\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <Content Include="Content\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Content\lib\jquery-validation-unobtrusive\LICENSE.txt" />
+    <Content Include="Content\lib\jquery-validation\dist\additional-methods.js" />
+    <Content Include="Content\lib\jquery-validation\dist\additional-methods.min.js" />
+    <Content Include="Content\lib\jquery-validation\dist\jquery.validate.js" />
+    <Content Include="Content\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <Content Include="Content\lib\jquery\dist\jquery.js" />
+    <Content Include="Content\lib\jquery\dist\jquery.min.js" />
+    <Content Include="Content\lib\jquery\LICENSE.txt" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Models\InformationTechnologiesDepartmentIS_DB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.edmx</DependentUpon>
+      <LastGenOutput>InformationTechnologiesDepartmentIS_DB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\InformationTechnologiesDepartmentIS_DB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.edmx</DependentUpon>
+      <LastGenOutput>InformationTechnologiesDepartmentIS_DB.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.esm.js" />
+    <Content Include="Scripts\bootstrap.esm.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-utilities.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap.rtl.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.esm.js.map" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.esm.min.js.map" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.js.map" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <Content Include="Content\lib\bootstrap\LICENSE" />
+    <Content Include="Content\lib\jquery-validation\LICENSE.md" />
+    <Content Include="Content\lib\jquery\dist\jquery.min.map" />
+    <EntityDeploy Include="Models\InformationTechnologiesDepartmentIS_DB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>InformationTechnologiesDepartmentIS_DB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\InformationTechnologiesDepartmentIS_DB.edmx.diagram">
+      <DependentUpon>InformationTechnologiesDepartmentIS_DB.edmx</DependentUpon>
+    </Content>
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Admin\GraduationThesis.cshtml" />
+    <Content Include="Views\Admin\GraduationThesisDetail.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Shared\_StudentLayout.cshtml" />
+    <Content Include="Views\Student\GraduationThesis.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Admin\PendingProjects.cshtml" />
+    <Content Include="Views\Admin\AcceptedProjects.cshtml" />
+    <Content Include="Views\Admin\RejectedProjects.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Default\Index.cshtml" />
+    <Content Include="Views\Student\Appointment.cshtml" />
+    <Content Include="Views\Student\Appointments.cshtml" />
+    <Content Include="Views\Admin\Appointment.cshtml" />
+    <Content Include="Views\Student\ProjectAdvisorProposalForm.cshtml" />
+    <Content Include="Views\Student\ProjectAdvisorChangeProposalForm.cshtml" />
+    <Content Include="Views\Student\GraduationProjectForms.cshtml" />
+    <Content Include="Views\Student\ProjectDeliveryCertificateForm.cshtml" />
+    <Content Include="Views\Student\ProjectSubjectChangeProposalForm.cshtml" />
+    <Content Include="Views\Student\ProjectTitleProposalForm.cshtml" />
+    <Content Include="Views\Student\ProjectPlagiarismReportForm.cshtml" />
+    <Content Include="Views\Student\MasterThesisForms.cshtml" />
+    <Content Include="Views\Student\ThesisAdvisorProposalForm.cshtml" />
+    <Content Include="Views\Student\ThesisAdvisorChangeProposalForm.cshtml" />
+    <Content Include="Views\Student\ThesisTitleProposalForm.cshtml" />
+    <Content Include="Views\Student\ThesisSubjectChangeProposalForm.cshtml" />
+    <Content Include="Views\Student\ThesisAdvisorAndSubjectChangeProposalForm.cshtml" />
+    <Content Include="Views\Student\ThesisExtensionProposalForm.cshtml" />
+    <Content Include="Views\Student\ThesisAssessmentProposalForm.cshtml" />
+    <Content Include="Views\Student\ThesisPlagiarismReportForm.cshtml" />
+    <Content Include="Views\Student\ThesisDeliveryCertificateForm.cshtml" />
+    <Content Include="Views\Admin\MasterProjectForms.cshtml" />
+    <Content Include="Views\Admin\ProjectAdvisorProposalForm.cshtml" />
+    <Content Include="Views\Admin\ProjectAdvisorChangeProposalForm.cshtml" />
+    <Content Include="Views\Admin\ProjectTopicChangeProposalForm.cshtml" />
+    <Content Include="Views\Admin\ProjectTitleProposalForm.cshtml" />
+    <Content Include="Views\Admin\ProjectDeliveryCertificateForm.cshtml" />
+    <Content Include="Views\Admin\ProjectPlagiarismReportForm.cshtml" />
+    <Content Include="Views\Admin\ProjectAdvisorProposalFormDetail.cshtml" />
+    <Content Include="Views\Admin\ProjectAdvisorChangeProposalFormDetail.cshtml" />
+    <Content Include="Views\Admin\ProjectTopicChangeProposalFormDetail.cshtml" />
+    <Content Include="Views\Admin\ProjectTitleProposalFormDetail.cshtml" />
+    <Content Include="Views\Admin\ProjectDeliveryCertificateFormDetail.cshtml" />
+    <Content Include="Views\Admin\ProjectPlagiarismReportFormDetail.cshtml" />
+    <Content Include="Views\Admin\MasterThesisForms.cshtml" />
+    <Content Include="Views\Admin\ThesisAdvisorProposalForm.cshtml" />
+    <Content Include="Views\Admin\ThesisAdvisorChangeProposalForm.cshtml" />
+    <Content Include="Views\Admin\ThesisTitleProposalForm.cshtml" />
+    <Content Include="Views\Admin\ThesisSubjectChangeProposalForm.cshtml" />
+    <Content Include="Views\Admin\ThesisAdvisorAndSubjectChangeProposalForm.cshtml" />
+    <Content Include="Views\Admin\ThesisExtensionProposalForm.cshtml" />
+    <Content Include="Views\Admin\ThesisAssessmentProposalForm.cshtml" />
+    <Content Include="Views\Admin\ThesisPlagiarismReportForm.cshtml" />
+    <Content Include="Views\Admin\ThesisDeliveryCertificateForm.cshtml" />
+    <Content Include="Views\Admin\ThesisAdvisorProposalFormDetail.cshtml" />
+    <Content Include="Views\Admin\ThesisAdvisorChangeProposalFormDetail.cshtml" />
+    <Content Include="Views\Admin\ThesisTitleProposalFormDetail.cshtml" />
+    <Content Include="Views\Admin\ThesisSubjectChangeProposalFormDetail.cshtml" />
+    <Content Include="Views\Admin\ThesisAdvisorAndSubjectChangeProposalFormDetail.cshtml" />
+    <Content Include="Views\Admin\ThesisExtensionProposalFormDetail.cshtml" />
+    <Content Include="Views\Admin\ThesisAssessmentProposalFormDetail.cshtml" />
+    <Content Include="Views\Admin\ThesisPlagiarismReportFormDetail.cshtml" />
+    <Content Include="Views\Admin\ThesisDeliveryCertificateFormDetail.cshtml" />
+    <Content Include="Views\Administrator\AddUser.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap.rtl.min.css.map" />
+    <Content Include="Content\bootstrap.rtl.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.css.map" />
+    <Content Include="Content\bootstrap-utilities.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.esm.min.js.map" />
+    <Content Include="Scripts\bootstrap.esm.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49851</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44316/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

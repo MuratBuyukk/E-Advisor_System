@@ -1,0 +1,273 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.ViewModels.AppointmentViewModel
+@using System.Linq
+@{
+    ViewBag.Title = "Appointment";
+    string data = ViewBag.Data;
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<link href="~/Content/css/slider.css" rel="stylesheet" />
+
+
+<script>
+    $(function () {
+        $("#datepicker").datepicker({
+            dateFormat: "dd.mm.yy"
+        });
+    });
+</script>
+<main class="p-5">
+    <div>
+        <label for="exampleDataList" class="form-label fw-bold fs-5">Select advisor and date to see the available appointments</label>
+    </div>
+
+    @{
+        var academicianList = new List<SelectListItem>();
+        foreach (var academician in Model.Academicians)
+        {
+            academicianList.Add(new SelectListItem
+            {
+                Text = $"{academician.AcademicianFirstName} {academician.AcademicianLastName}",
+                Value = academician.UserId.ToString(),
+                Selected = false
+            });
+        }
+    }
+    @using (Html.BeginForm("Appointment", "Student", FormMethod.Post))
+    {
+        <div class="py-3 d-flex gap-2">
+            @Html.DropDownList("AcademicianId", academicianList, "Select an academician", new { @class = "form-select mw-100 p-2 px-3 w-75", id = "advisorDropdown" })
+
+            @Html.TextBox("AppointmentDate", "", new { @id = "datepicker", @class = "form-control w-25", @type = "text", placeholder = "Select date to filter" })
+            <button class="btn btn-primary" id="showButton">Search</button>
+        </div>
+        <div class="text-danger mb-3">
+            @Html.ValidationMessage("AcademicianId", "", new { @class = "text-danger fw-bold" })
+        </div>
+    }
+<div class="card">
+        @if (ViewBag.PopupMessage != null)
+        {
+            <script>
+                $(document).ready(function () {
+                    $('#staticExist').modal('show');
+                });
+            </script>
+        }
+
+    <div class="card-header bg-primary">
+        <i class="fas fa-table me-1 text-white"></i>
+        <span id="advisorFullName" class="text-capitalize h6 fw-bold text-white"></span>
+    </div>
+    <div class="card-body table-responsive">
+        <table class="table text-center">
+            <ul class="nav nav-pills nav-fill w-100" id="pills-tab" role="tablist">
+                @{
+                    DateTime today = DateTime.Now.Date;
+                    var uniqueDates = new List<DateTime>();
+                    foreach (var appointment in Model.Appointments.OrderBy(a => a.AppointmentDate))
+                    {
+                        DateTime dateWithoutTime = appointment.AppointmentDate.Value.Date;
+                        if (!uniqueDates.Contains(dateWithoutTime))
+                        {
+                            uniqueDates.Add(dateWithoutTime);
+                        }
+                        if (dateWithoutTime < today)
+                        {
+                            uniqueDates.Remove(dateWithoutTime);
+                        }
+                        if (dateWithoutTime.DayOfWeek.ToString() == "Saturday"
+                            || dateWithoutTime.Day.ToString() == "Friday")
+                        {
+                            uniqueDates.Remove(dateWithoutTime);
+                        }
+                    }
+                }
+                <div class="container-fluid pt-2">
+                    @if (data != null)
+                    {
+                        <div class="alert alert-warning w-100 fw-bold" role="alert">
+                            @data
+                        </div>
+                    }
+                    <ul class="nav nav-pills nav-fill w-100 d-flex owl_1 owl-carousel owl-theme" id="pills-tab" role="tablist">
+
+                        @foreach (var day in uniqueDates)
+                        {
+                            var index = uniqueDates.IndexOf(day) + 1;
+                            var id = $"pill-{index}";
+                            <li class="nav-item item" role="presentation" id="nav-item">
+                                <button class="nav-link filterButton fw-bold border border-2 border-primary rounded-pill" data-bs-toggle="pill" href="#@id" role="tab" aria-controls="@id" aria-selected="false">
+                                    @day.ToString("dd.MM.yyyy, dddd")
+                                </button>
+                            </li>
+                        }
+                    </ul>
+
+                    <div class="tab-content" id="pills-tabContent">
+                        @foreach (var day in uniqueDates)
+                        {
+                            var index = uniqueDates.IndexOf(day) + 1;
+                            var id = $"pill-{index}";
+
+                            <div class="tab-pane fade" id="@id" role="tabpanel" aria-labelledby="@id-tab">
+                                <div class="accordion accordion-flush mt-4" id="accordionFlushExample">
+                                    @{
+                                        var count = 0;
+                                    }
+
+                                    @foreach (var appointment in Model.Appointments
+                                        .Where(a => a.AppointmentDate.Value.Date == day.Date
+                                        )
+                                        .OrderBy(a => a.AppointmentDate)
+                                        .GroupBy(a => a.AppointmentDate.Value.ToString("dd.MM.yyyy HH")))
+
+                                    {
+                                        var firstAppointment = appointment.First();
+                                        DateTime appointmentDate = (DateTime)firstAppointment.AppointmentDate;
+                                        string formattedDate = appointmentDate.ToString("HH:00");
+
+                                        var collapseId = $"flush-collapse-{count}";
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="@id-tab">
+                                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#@collapseId" aria-expanded="false" aria-controls="@collapseId">
+                                                    @formattedDate
+                                                </button>
+                                            </h2>
+                                            <div id="@collapseId" class="accordion-collapse collapse" aria-labelledby="@id-tab" data-bs-parent="#accordionFlushExample">
+                                                <div class="accordion-body">
+                                                    @foreach (var hours in appointment)
+                                                    {
+                                                        var appointmentTime = ((DateTime)hours.AppointmentDate).ToString("HH:mm");
+                                                        <button type="button" class="btn btn-primary btn-sm px-4 m-1 appointment-link" data-bs-toggle="modal" data-bs-target="#staticAccept" data-appointment-id="@hours.AppointmentId" data-appointment-date="@hours.AppointmentDate.Value.ToString("dd.MM.yyyy dddd")" data-appointment-time="@hours.AppointmentDate.Value.ToString("HH:mm")" disabled="@(hours.AppointmentStatusId == 2 || hours.AppointmentStatusId == 3 ? "disabled" : null)">
+                                                            @appointmentTime
+                                                        </button>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        count++;
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </ul>
+            <div>
+                <div>
+                </div>
+            </div>
+        </table>
+    </div>
+</div>
+
+    <!-- MODAL -->
+
+    <div class="modal fade" id="staticAccept" data-bs-backdrop="static" data-bs-keyboard="false"
+         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h5 class="modal-title text-white" id="staticBackdropLabel">Confirmation</h5>
+                    <button type="button" class="btn-close bg-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body fw-bold">
+                    Are you sure you want to accept the appointment?
+                </div>
+                @using (Html.BeginForm("RequestAppointment", "Student", FormMethod.Post))
+                {
+                    <div class="modal-body">
+                        <p><b>Advisor:</b> <span id="modalAppointmentAdvisor"></span></p>
+                        <p><b>Appointment Date:</b> <span id="modalAppointmentDate"></span></p>
+                        <p><b>Appointment Time:</b> <span id="modalAppointmentTime"></span></p>
+                        @Html.Hidden("appointmentId", "", new { id = "appointmentId" })
+                        <p>
+                            <b>Appointment Topic:</b>
+                        </p>
+                        @Html.TextArea("appointmentTopic", new { @class = "w-100 p-3", placeholder = "Enter the topic here.." })
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-secondary"
+                               data-bs-dismiss="modal" value="Cancel" />
+                        <input type="submit" class="btn btn-primary mx-2"
+                               data-bs-dismiss="modal" value="Yes" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="staticExist" data-bs-backdrop="static" data-bs-keyboard="false"
+         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title text-white" id="staticBackdropLabel">Warning</h5>
+                    <button type="button" class="btn-close bg-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body fw-bold">
+                    You have already an appointment on this day!
+                </div>
+                <div class="modal-body">
+                    You cannot book more than one appointment with the same academician in a single day.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var appointmentLinks = document.querySelectorAll('.appointment-link');
+
+            appointmentLinks.forEach(function (link) {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    var selectedText = $("#advisorDropdown option:selected").text();
+                    var appointmentId = link.getAttribute('data-appointment-id');
+                    var appointmentDate = link.getAttribute('data-appointment-date');
+                    var appointmentTime = link.getAttribute('data-appointment-time');
+                    document.getElementById('modalAppointmentDate').innerText = appointmentDate;
+                    document.getElementById('modalAppointmentTime').innerText = appointmentTime;
+                    document.getElementById('modalAppointmentAdvisor').innerText = selectedText;
+
+                    document.getElementById('appointmentId').value = appointmentId;
+
+
+                });
+            });
+        });
+    </script>
+    <script>
+        var selectedText = $("#advisorDropdown option:selected").text();
+        if ($("#advisorDropdown option:first").is(":selected")) {
+            document.getElementById('advisorFullName').innerText = "Appointments";
+
+        }
+        else {
+            document.getElementById('advisorFullName').innerText = "Appointments for" + " " + selectedText;
+        }
+
+    </script>
+    <script src="~/Content/js/slider.js"></script>
+
+</main>
