@@ -1,0 +1,35 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.Academician
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdministratorLayout.cshtml";
+}
+
+<main>
+<div class="container-fluid px-4">
+    <h2 class="mt-4">Admistrator Panel</h2>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/Admin/Index">Homepage</a></li>
+        <li class="breadcrumb-item active">Welcome</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-body">
+            <p class="mb-3 fw-bold">
+                Welcome, @Model.AcademicianFirstName @Model.AcademicianLastName
+            </p>
+            <p>
+                This is a comprehensive information system implementation within the Information
+                Technology
+                department,
+                aiming to digitize and automate various processes, including internships, graduation
+                projects,
+                and academic appointments, offers a proactive solution to address the common
+                communication challenges
+                faced by both students and faculty,
+                thereby enhancing efficiency and organizing these critical educational efforts.
+            </p>
+        </div>
+    </div>
+</div>
+</main>
+

@@ -19,12 +19,12 @@
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             @*<div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for user..." aria-label="Search for..."
-                       aria-describedby="btnNavbarSearch" />
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>*@
+                    <input class="form-control" type="text" placeholder="Search for user..." aria-label="Search for..."
+                           aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>*@
         </form>
         <!-- Navbar-->
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -49,27 +49,12 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        @{
-                            MembershipUser currentUser = Membership.GetUser(User.Identity.Name);
-                            Guid userId = (Guid)currentUser.ProviderUserKey;
-                            string[] userRoles = Roles.GetRolesForUser(currentUser.UserName);
-                            foreach (string role in userRoles)
-                            {
-                                if (role == "Admin")
-                                {
-                                    <div class="sb-sidenav-menu-heading">Admin</div>
-                                    <a class="nav-link" href="/Administrator/Index">
-                                        <div class="sb-nav-link-icon"><i class="fa-solid fa-lock" style="color: #595c5f;"></i></div>
-                                        Admin Control Panel
-                                    </a>
-                                }
-                            }
-                        }
-                        <div class="sb-sidenav-menu-heading">Projects</div>
+                        @*<div class="sb-sidenav-menu-heading">Projects</div>
                         <a class="nav-link" href="/Admin/GraduationThesis">
                             <div class="sb-nav-link-icon"><i class="fa fa-graduation-cap"></i></div>
                             Graduation Thesis
                         </a>
+
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
                            aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
@@ -87,12 +72,29 @@
                                     Master's Thesis
                                 </a>
                             </nav>
-                        </div>
-                        <div class="sb-sidenav-menu-heading">Appointment</div>
-                        <a class="nav-link" href="/Admin/Appointment">
-                            <div class="sb-nav-link-icon"><i class="fas fa-calendar-check"></i></div>
-                            Appointments
+                        </div>*@
+                        <div class="sb-sidenav-menu-heading">Controll Users</div>
+                        <a class="nav-link" href="/Administrator/AddUser">
+                            <div class="sb-nav-link-icon"><i class="fa fa-graduation-cap"></i></div>
+                            Add New User
                         </a>
+
+                        @{
+                            MembershipUser currentUser = Membership.GetUser(User.Identity.Name);
+                            Guid userId = (Guid)currentUser.ProviderUserKey;
+                            string[] userRoles = Roles.GetRolesForUser(currentUser.UserName);
+                            foreach (string role in userRoles)
+                            {
+                                if (role == "Academician")
+                                {
+                                    <div class="sb-sidenav-menu-heading">Return Academician Panel</div>
+                                    <a class="nav-link" href="/Admin/Index">
+                                        <div class="sb-nav-link-icon"><i class="fa-solid fa-rotate-left" style="color: #595c5f;"></i></div>
+                                        Return
+                                    </a>
+                                }
+                            }
+                        }
 
                     </div>
                 </div>

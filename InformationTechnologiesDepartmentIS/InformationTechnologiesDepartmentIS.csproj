@@ -493,6 +493,8 @@
     <Content Include="Views\Admin\ThesisPlagiarismReportFormDetail.cshtml" />
     <Content Include="Views\Admin\ThesisDeliveryCertificateFormDetail.cshtml" />
     <Content Include="Views\Administrator\AddUser.cshtml" />
+    <Content Include="Views\Shared\_AdministratorLayout.cshtml" />
+    <Content Include="Views\Administrator\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

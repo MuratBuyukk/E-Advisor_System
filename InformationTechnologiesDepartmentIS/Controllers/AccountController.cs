@@ -57,20 +57,17 @@ namespace InformationTechnologiesDepartmentIS.Controllers
             {
                 if (Membership.ValidateUser(model.Username, model.Password))
                 {
-                    string[] userRoles = Roles.GetRolesForUser(model.Username);
-                    if (userRoles.Contains("Student"))
+                    FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
+                    if (Roles.IsUserInRole(model.Username,"Student"))
                     {
-                        FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
                         return RedirectToAction("Index", "Student");
                     }
-                    else if (userRoles.Contains("Academician"))
+                    else if (Roles.IsUserInRole(model.Username, "Academician"))
                     {
-                        FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
                         return RedirectToAction("Index", "Admin");
                     }
-                    else if (userRoles.Contains("Admin"))
+                    else if (Roles.IsUserInRole(model.Username, "Admin"))
                     {
-                        FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
                         return RedirectToAction("Index", "Admin");
                     }
                 }
@@ -79,7 +76,6 @@ namespace InformationTechnologiesDepartmentIS.Controllers
                     ModelState.AddModelError("loginError", "The email or password provided is incorrect!");
                 }
             }
-
             return View(model);
         }
         public ActionResult LogOut()

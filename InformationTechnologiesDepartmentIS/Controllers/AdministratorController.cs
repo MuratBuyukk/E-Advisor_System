@@ -20,7 +20,10 @@ namespace InformationTechnologiesDepartmentIS.Controllers
         // GET: Administrator
         public ActionResult Index()
         {
-            return View();
+            MembershipUser currentUser = Membership.GetUser(User.Identity.Name);
+            Guid userId = (Guid)currentUser.ProviderUserKey;
+            Academician academician = academicianBusiness.GetByGuid(userId);
+            return View(academician);
         }
 
         public ActionResult AddUser()

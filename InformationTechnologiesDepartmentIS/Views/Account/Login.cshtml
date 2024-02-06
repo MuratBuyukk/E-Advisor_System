@@ -26,14 +26,15 @@
                                 <div class="card-body">
                                     @using (Html.BeginForm("Login", "Account", FormMethod.Post))
                                     {
-                                        @Html.ValidationSummary("", new { @class = "text-danger" })
                                         @Html.AntiForgeryToken()
                                         <div class="form-floating mb-3">
                                             @Html.TextBox("Username", Model.Username, new { @class = "form-control form-control-user", placeholder = "Enter Email Address..." })
+                                            @Html.ValidationMessage("Username", "", new { @class = "text-danger" })
                                             <label for="inputEmail">Email address</label>
                                         </div>
                                         <div class="form-floating mb-3">
                                             @Html.Password("Password", Model.Password, new { @class = "form-control form-control-user", placeholder = "Enter password..." })
+                                            @Html.ValidationMessage("Password", "", new { @class = "text-danger" })
                                             <label for="inputPassword">Password</label>
                                         </div>
                                         <div class="form-check mb-3">
