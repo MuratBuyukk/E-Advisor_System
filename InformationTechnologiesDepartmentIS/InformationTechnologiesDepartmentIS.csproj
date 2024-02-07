@@ -495,6 +495,7 @@
     <Content Include="Views\Administrator\AddUser.cshtml" />
     <Content Include="Views\Shared\_AdministratorLayout.cshtml" />
     <Content Include="Views\Administrator\Index.cshtml" />
+    <Content Include="Views\Administrator\University.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

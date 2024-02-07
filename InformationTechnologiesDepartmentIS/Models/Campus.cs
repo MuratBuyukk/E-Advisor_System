@@ -21,6 +21,7 @@ namespace InformationTechnologiesDepartmentIS.Models
         }
     
         public int CampusId { get; set; }
+
         public string CampusName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

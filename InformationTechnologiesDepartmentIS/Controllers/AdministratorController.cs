@@ -17,6 +17,7 @@ namespace InformationTechnologiesDepartmentIS.Controllers
         AcademicianBusiness academicianBusiness = new AcademicianBusiness();
         StudentBusiness studentBusiness = new StudentBusiness();
         AdvisorBusiness advisorBusiness = new AdvisorBusiness();
+        CampusBusiness campusBusiness = new CampusBusiness();
         // GET: Administrator
         public ActionResult Index()
         {
@@ -29,6 +30,36 @@ namespace InformationTechnologiesDepartmentIS.Controllers
         public ActionResult AddUser()
         {
             return View();
+        }
+
+        public ActionResult University()
+        {
+            return View(campusBusiness.GetAll());
+        }
+
+        [HttpPost, ActionName("AddCampus")]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddCampus([Bind(Include = "CampusName")]
+        Campus campus)
+        {
+            if (ModelState.IsValid)
+            {
+                if (string.IsNullOrEmpty(campus.CampusName))
+                {
+                    ModelState.AddModelError("inputError", "The required fields provided is missing");
+                    return RedirectToAction("University");
+                }
+                else
+                {
+                    campusBusiness.Add(campus);
+                    return RedirectToAction("University");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("inputError", "The required fields provided is missing");
+            }
+            return View(campusBusiness.GetAll());
         }
 
         [HttpPost, ActionName("AddUser")]

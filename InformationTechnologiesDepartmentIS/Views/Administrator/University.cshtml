@@ -1,0 +1,81 @@
+﻿@model List<InformationTechnologiesDepartmentIS.Models.Campus>
+
+@{
+    ViewBag.Title = "University";
+    Layout = "~/Views/Shared/_AdministratorLayout.cshtml";
+}
+
+<div class="container-fluid px-4 mt-4">
+    <h3>Control Campuses</h3>
+    <div class="card mb-4 mt-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Campuses
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Campus Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var campus in Model)
+                    {
+                        <tr>
+                            <td>
+                                <span style="float: left;"><b>@campus.CampusName</b></span>
+                                <div class="btn-group" style="float: right;">
+                                    <button type="button" class="btn btn-warning btn-sm rounded me-2">
+                                        <i class="fas fa-pencil-alt fa-xs"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm rounded me-2">
+                                        <i class="fas fa-trash-alt fa-xs"></i>
+                                    </button>
+                                </div>
+                                <div style="clear: both;"></div>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td>
+                            <div class="btn-group" style="float: right;">
+                                <button type="button" class="btn btn-success btn-sm rounded me-2" data-bs-toggle="modal" data-bs-target="#addModal">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            @using (Html.BeginForm("AddCampus", "Administrator", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Add Campus</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <b>Please write the name of the campus to be added.</b>
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="itemName" class="form-label">Campus Name:</label>
+                                        @Html.ValidationMessage("CampusName", "", new { @class = "text-danger" })
+                                        @Html.TextBox("CampusName", "", new { @class = "form-control mt-2" })
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            </div>
+    </div>
+</div>
