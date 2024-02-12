@@ -11,7 +11,8 @@ namespace InformationTechnologiesDepartmentIS.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Campus
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,10 +22,11 @@ namespace InformationTechnologiesDepartmentIS.Models
         }
     
         public int CampusId { get; set; }
-
+        [Required(ErrorMessage = "Please Enter a Campus Name.")]
         public string CampusName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Faculty> Faculties { get; set; }
+        public string errorMessage;
     }
 }

@@ -5,6 +5,28 @@
     Layout = "~/Views/Shared/_AdministratorLayout.cshtml";
 }
 
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<script>
+    $(document).ready(function () {
+        $(".btn-danger").click(function () {
+            var campusId = $(this).closest("tr").find("[id^='id_']").text().trim(); // CampusId değerini al
+            $("#CampusId").val(campusId); // Gizli alana ata
+            console.log("Campus ID: " + campusId);
+        });
+    });
+    $(document).ready(function () {
+        $(".btn-warning").click(function () {
+            var campusId = $(this).closest("tr").find("[id^='id_']").text().trim(); // CampusId değerini al
+            $("#CampusId").val(campusId); // Gizli alana ata
+            console.log("Campus ID: " + campusId);
+        });
+    });
+</script>
+
 <div class="container-fluid px-4 mt-4">
     <h3>Control Campuses</h3>
     <div class="card mb-4 mt-4">
@@ -24,12 +46,13 @@
                     {
                         <tr>
                             <td>
+                                <span id="id_@campus.CampusId" style="visibility: hidden">@campus.CampusId</span>
                                 <span style="float: left;"><b>@campus.CampusName</b></span>
                                 <div class="btn-group" style="float: right;">
-                                    <button type="button" class="btn btn-warning btn-sm rounded me-2">
+                                    <button type="button" class="btn btn-warning btn-sm rounded me-2" data-bs-toggle="modal" data-bs-target="#editModal">
                                         <i class="fas fa-pencil-alt fa-xs"></i>
                                     </button>
-                                    <button type="button" class="btn btn-danger btn-sm rounded me-2">
+                                    <button type="button" class="btn btn-danger btn-sm rounded me-2" data-bs-toggle="modal" data-bs-target="#removeModal">
                                         <i class="fas fa-trash-alt fa-xs"></i>
                                     </button>
                                 </div>
@@ -40,7 +63,7 @@
                     <tr>
                         <td>
                             <div class="btn-group" style="float: right;">
-                                <button type="button" class="btn btn-success btn-sm rounded me-2" data-bs-toggle="modal" data-bs-target="#addModal">
+                                <button type="button" class="btn btn-success btn-sm rounded me-2" data-bs-toggle="modal" data-bs-target="#addModal" id="">
                                     <i class="fas fa-plus"></i>
                                 </button>
                             </div>
@@ -51,11 +74,11 @@
             @using (Html.BeginForm("AddCampus", "Administrator", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
-                <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Add Campus</h5>
+                                <h5 class="modal-title" id="addModalLabel">Add Campus</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -76,6 +99,68 @@
                     </div>
                 </div>
             }
-            </div>
+
+
+            @using (Html.BeginForm("RemoveCampus", "Administrator", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="removeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="removeModalLabel">Remove Campus</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <b>Are you sure you really want to delete this campus?</b>
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="itemName" class="form-label">Enter your password for confirmation:</label>
+                                        @Html.ValidationMessage("Password", "", new { @class = "text-danger" })
+                                        @Html.TextBox("Password", "", new { @class = "form-control mt-2", type = "password" })
+                                        @Html.Hidden("CampusId", "", new { id = "CampusId" })
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @using (Html.BeginForm("EditCampus", "Administrator", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editModalLabel">Edit Campus</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <b>Please correct the values to be edited.</b>
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="itemName" class="form-label">Campus Name:</label>
+                                        @Html.ValidationMessage("CampusName", "", new { @class = "text-danger" })
+                                        @Html.TextBox("CampusName", "", new { @class = "form-control mt-2" })
+                                        @Html.Hidden("CampusId", "", new { id = "CampusId" })
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
     </div>
 </div>

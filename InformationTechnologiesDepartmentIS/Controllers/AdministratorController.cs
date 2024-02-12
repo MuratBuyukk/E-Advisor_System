@@ -59,7 +59,57 @@ namespace InformationTechnologiesDepartmentIS.Controllers
             {
                 ModelState.AddModelError("inputError", "The required fields provided is missing");
             }
-            return View(campusBusiness.GetAll());
+            return RedirectToAction("University");
+        }
+
+        [HttpPost, ActionName("RemoveCampus")]
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveCampus([Bind(Include = "CampusId,Password")]
+        Campus campus, string password)
+        {
+            Debug.WriteLine("model state: " + ModelState.IsValid); // It returns false, the model is not valid but it works
+
+            if (string.IsNullOrEmpty(password))
+            {
+                ModelState.AddModelError("Password", "Password is required.");
+            }   
+
+            string username = User.Identity.Name;
+            bool isValid = Membership.ValidateUser(username, password);
+            Debug.WriteLine("passwordcrrect: " + isValid);
+            if (isValid)
+            {
+                campusBusiness.Delete(campus);
+            }
+            else
+            {
+                ModelState.AddModelError("Password", "Password is wrong.");
+            }
+            return RedirectToAction("University");
+        }
+
+        [HttpPost, ActionName("EditCampus")]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditCampus([Bind(Include = "CampusId,CampusName")]
+        Campus campus)
+        {
+            Debug.WriteLine("model state: " + ModelState.IsValid); // It returns false, the model is not valid but it works
+            if (ModelState.IsValid)
+            {
+                if (string.IsNullOrEmpty(campus.CampusName))
+                {
+                    ModelState.AddModelError("CampusName", "Campus Name is required.");
+                }
+                else
+                {
+                    campusBusiness.Update(campus);
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("inputError", "The required fields provided is missing");
+            }
+            return RedirectToAction("University");
         }
 
         [HttpPost, ActionName("AddUser")]
