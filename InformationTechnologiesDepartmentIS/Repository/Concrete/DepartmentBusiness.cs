@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using InformationTechnologiesDepartmentIS.Models;
+using InformationTechnologiesDepartmentIS.Models.ViewModels.AdministratorViewModels;
 using InformationTechnologiesDepartmentIS.Repository.Abstract;
+using InformationTechnologiesFacultyIS.Repository.Concrete;
 
 namespace InformationTechnologiesDepartmentIS.Repository.Concrete
 {
     public class DepartmentBusiness : IDatabaseBusiness<Department>
     {
+        FacultyBusiness facultyBusiness = new FacultyBusiness();
         public void Add(Department entity)
         {
             using (var db = new ITDepartmentDbEntities())
@@ -88,6 +92,26 @@ namespace InformationTechnologiesDepartmentIS.Repository.Concrete
                 db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
+        }
+
+        public List<Department> GetDepartments()
+        {
+            using (var db = new ITDepartmentDbEntities())
+            {
+                var departments = db.Departments
+                    .Include(d => d.Faculty)
+                     .Include(d => d.Faculty.Campus) 
+                    .ToList();
+                return departments;
+            }
+        }
+
+        public ManageDepartmentViewModel GetDepartmentViewModel()
+        {
+            var viewModel = new ManageDepartmentViewModel();
+            viewModel.Faculties = facultyBusiness.GetAll();
+            viewModel.Departments = GetDepartments();
+            return viewModel;
         }
     }
 }

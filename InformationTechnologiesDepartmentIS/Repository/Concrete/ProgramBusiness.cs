@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
+using System.Data.Entity;
 using InformationTechnologiesDepartmentIS.Models;
+using InformationTechnologiesDepartmentIS.Models.ViewModels.AdministratorViewModels;
 using InformationTechnologiesDepartmentIS.Repository.Abstract;
+using InformationTechnologiesFacultyIS.Repository.Concrete;
+using InformationTechnologiesDepartmentIS.Repository.Concrete;
 
 
 namespace InformationTechnologiesProgramIS.Repository.Concrete
 {
     public class ProgramBusiness : IDatabaseBusiness<Program>
     {
+        DepartmentBusiness departmentBusiness = new DepartmentBusiness();
+        AcademicianBusiness academicianBusiness = new AcademicianBusiness();
         public void Add(Program entity)
         {
             using (var db = new ITDepartmentDbEntities())
@@ -84,6 +90,29 @@ namespace InformationTechnologiesProgramIS.Repository.Concrete
                 db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
+        }
+
+        public List<Program> GetPrograms()
+        {
+            using (var db = new ITDepartmentDbEntities())
+            {
+                var programs = db.Programs
+                    .Include(p => p.Department) 
+                     .Include(p => p.Academician)
+                     .Include(p => p.Department.Faculty)
+                     .Include(p => p.Department.Faculty.Campus)
+                    .ToList();
+                return programs;
+            }
+        }
+
+        public ManageProgramViewModel GetProgramViewModel()
+        {
+            var viewModel = new ManageProgramViewModel();
+            viewModel.Departments = departmentBusiness.GetAll();
+            viewModel.Programs = GetPrograms();
+            viewModel.Academicians = academicianBusiness.GetAll();
+            return viewModel;
         }
     }
 }

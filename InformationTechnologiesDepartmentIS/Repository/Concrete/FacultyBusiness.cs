@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using InformationTechnologiesDepartmentIS.Models;
+using InformationTechnologiesDepartmentIS.Models.ViewModels.AdministratorViewModels;
 using InformationTechnologiesDepartmentIS.Repository.Abstract;
+using InformationTechnologiesDepartmentIS.Repository.Concrete;
 
 namespace InformationTechnologiesFacultyIS.Repository.Concrete
 {
     public class FacultyBusiness : IDatabaseBusiness<Faculty>
     {
+        CampusBusiness campusBusiness = new CampusBusiness();
         public void Add(Faculty entity)
         {
             using (var db = new ITDepartmentDbEntities())
@@ -83,6 +87,25 @@ namespace InformationTechnologiesFacultyIS.Repository.Concrete
                 db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
+        }
+
+        public List<Faculty> GetFaculties()
+        {
+            using (var db = new ITDepartmentDbEntities())
+            {
+                var faculties = db.Faculties
+                .Include(f => f.Campus)
+                .ToList();
+                return faculties;
+            }
+        }
+
+        public ManageFacultyViewModel GetFacultyViewModel()
+        {
+            ManageFacultyViewModel viewModel = new ManageFacultyViewModel();
+            viewModel.Faculties = GetFaculties();
+            viewModel.Campuses = campusBusiness.GetAll();
+            return viewModel;
         }
     }
 }

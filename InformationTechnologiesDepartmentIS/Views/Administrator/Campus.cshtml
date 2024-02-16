@@ -1,7 +1,7 @@
 ﻿@model List<InformationTechnologiesDepartmentIS.Models.Campus>
 
 @{
-    ViewBag.Title = "University";
+    ViewBag.Title = "Campus";
     Layout = "~/Views/Shared/_AdministratorLayout.cshtml";
 }
 
@@ -10,22 +10,7 @@
 
 </head>
 
-<script>
-    $(document).ready(function () {
-        $(".btn-danger").click(function () {
-            var campusId = $(this).closest("tr").find("[id^='id_']").text().trim(); // CampusId değerini al
-            $("#CampusId").val(campusId); // Gizli alana ata
-            console.log("Campus ID: " + campusId);
-        });
-    });
-    $(document).ready(function () {
-        $(".btn-warning").click(function () {
-            var campusId = $(this).closest("tr").find("[id^='id_']").text().trim(); // CampusId değerini al
-            $("#CampusId").val(campusId); // Gizli alana ata
-            console.log("Campus ID: " + campusId);
-        });
-    });
-</script>
+
 
 <div class="container-fluid px-4 mt-4">
     <h3>Control Campuses</h3>
@@ -71,6 +56,7 @@
                     </tr>
                 </tbody>
             </table>
+
             @using (Html.BeginForm("AddCampus", "Administrator", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
@@ -99,38 +85,15 @@
                     </div>
                 </div>
             }
-
-
-            @using (Html.BeginForm("RemoveCampus", "Administrator", FormMethod.Post))
-            {
-                @Html.AntiForgeryToken()
-                <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="removeModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="removeModalLabel">Remove Campus</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <b>Are you sure you really want to delete this campus?</b>
-                                <form>
-                                    <div class="mb-3">
-                                        <label for="itemName" class="form-label">Enter your password for confirmation:</label>
-                                        @Html.ValidationMessage("Password", "", new { @class = "text-danger" })
-                                        @Html.TextBox("Password", "", new { @class = "form-control mt-2", type = "password" })
-                                        @Html.Hidden("CampusId", "", new { id = "CampusId" })
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-
+            <script>
+                $(document).ready(function () {
+                    $(".btn-warning").click(function () {
+                        var campusId = $(this).closest("tr").find("[id^='id_']").text().trim(); // CampusId değerini al
+                        $("#EditCampusId").val(campusId); // Gizli alana ata
+                        console.log("Campus ID: " + campusId);
+                    });
+                });
+            </script>
             @using (Html.BeginForm("EditCampus", "Administrator", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
@@ -148,7 +111,7 @@
                                         <label for="itemName" class="form-label">Campus Name:</label>
                                         @Html.ValidationMessage("CampusName", "", new { @class = "text-danger" })
                                         @Html.TextBox("CampusName", "", new { @class = "form-control mt-2" })
-                                        @Html.Hidden("CampusId", "", new { id = "CampusId" })
+                                        @Html.Hidden("CampusId", "", new { id = "EditCampusId" })
                                     </div>
                                 </form>
                             </div>
@@ -160,6 +123,47 @@
                     </div>
                 </div>
             }
+
+            <script>
+                $(document).ready(function () {
+                    $(".btn-danger").click(function () {
+                        var campusId = $(this).closest("tr").find("[id^='id_']").text().trim(); // CampusId değerini al
+                        $("#RemoveCampusId").val(campusId); // Gizli alana ata
+                        console.log("Campus ID: " + campusId);
+                    });
+                });
+            </script>
+            @using (Html.BeginForm("RemoveCampus", "Administrator", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="removeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="removeModalLabel">Remove Campus</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <b>Are you sure you really want to delete this campus?</b>
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="itemName" class="form-label">Enter your password for confirmation:</label>
+                                        @Html.ValidationMessage("Password", "", new { @class = "text-danger" })
+                                        @Html.TextBox("Password", "", new { @class = "form-control mt-2", type = "password" })
+                                        @Html.Hidden("CampusId", "", new { id = "RemoveCampusId" })
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
 
         </div>
     </div>

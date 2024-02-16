@@ -1,0 +1,211 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.ViewModels.AdministratorViewModels.ManageFacultyViewModel
+
+@{
+    ViewBag.Title = "Faculty";
+    Layout = "~/Views/Shared/_AdministratorLayout.cshtml";
+}
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+
+
+<div class="container-fluid px-4 mt-4">
+    <h3>Control Faculties</h3>
+    <div class="card mb-4 mt-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Faculties
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Campus Name</th>
+                        <th>Faculty Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var faculty in Model.Faculties)
+                    {
+                        <tr>
+                            <td>
+                                <span id="campusid_@faculty.Campus.CampusId" style="visibility: hidden">@faculty.Campus.CampusId</span>
+                                <span style="float: left;"><b>@faculty.Campus.CampusName</b></span>
+                            </td>
+                            <td>
+                                <span id="facultyid_@faculty.FacultyId" style="visibility: hidden">@faculty.FacultyId</span>
+                                <span style="float: left;"><b>@faculty.FacultyName</b></span>
+                                <div class="btn-group" style="float: right;">
+                                    <button type="button" class="btn btn-warning btn-sm rounded me-2" data-bs-toggle="modal" data-bs-target="#editModal">
+                                        <i class="fas fa-pencil-alt fa-xs"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm rounded me-2" data-bs-toggle="modal" data-bs-target="#removeModal">
+                                        <i class="fas fa-trash-alt fa-xs"></i>
+                                    </button>
+                                </div>
+                                <div style="clear: both;"></div>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td></td>
+                        <td colspan="">
+                            <div class="btn-group" style="float: right;">
+                                <button type="button" class="btn btn-success btn-sm rounded me-2" data-bs-toggle="modal" data-bs-target="#addModal" id="">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            @using (Html.BeginForm("AddFaculty", "Administrator", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addModalLabel">Add Faculty</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <b>Please write the name of the faculty to be added.</b>
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="itemName" class="form-label">Campus Name:</label>
+                                        @{
+                                            var campusList = new List<SelectListItem>();
+                                            foreach (var campus in Model.Campuses)
+                                            {
+                                                campusList.Add(new SelectListItem
+                                                {
+                                                    Text = $"{campus.CampusName}",
+                                                    Value = campus.CampusId.ToString(),
+                                                    Selected = false
+                                                });
+                                            }
+                                        }
+                                        @Html.DropDownList("CampusId", campusList, "Select an Campus", new { @class = "form-select border border-secondary border-opacity-50" })
+                                        @Html.ValidationMessage("CampusId", "", new { @class = "text-danger fw-bold" })
+                                        <label for="itemName" class="form-label">Faculty Name:</label>
+                                        @Html.ValidationMessage("FacultyName", "", new { @class = "text-danger" })
+                                        @Html.TextBox("FacultyName", "", new { @class = "form-control mt-2" })
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <script>
+                $(document).ready(function () {
+                    $(".btn-warning").click(function () {
+                        var facultyId = $(this).closest("tr").find("[id^='facultyid_']").text().trim();
+                        var campusId = $(this).closest("tr").find("[id^='campusid_']").text().trim();// FacultyId değerini al
+                        $("#EditFacultyId").val(facultyId); // Gizli alana ata
+                        $("#EditCampusId").val(campusId); // Gizli alana ata
+                        console.log("faculty ID: " + facultyId);
+                        console.log("campus ID: " + campusId);
+                    });
+                });
+            </script>
+            @using (Html.BeginForm("EditFaculty", "Administrator", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editModalLabel">Edit Faculty</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <b>Please correct the values to be edited.</b>
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="itemName" class="form-label">Select Faculty:</label>
+                                        @{
+                                            var campusList = new List<SelectListItem>();
+                                            foreach (var campus in Model.Campuses)
+                                            {
+                                                campusList.Add(new SelectListItem
+                                                {
+                                                    Text = $"{campus.CampusName}",
+                                                    Value = campus.CampusId.ToString(),
+                                                    Selected = false
+                                                });
+                                            }
+                                        }
+                                        @Html.DropDownList("CampusId", campusList, "Select an Campus", new { @class = "form-select border border-secondary border-opacity-50" })
+                                        @Html.ValidationMessage("CampusId", "", new { @class = "text-danger fw-bold" })
+
+                                        <label for="itemName" class="form-label">Faculty Name:</label>
+                                        @Html.ValidationMessage("FacultyName", "", new { @class = "text-danger" })
+                                        @Html.TextBox("FacultyName", "", new { @class = "form-control mt-2" })
+                                        @Html.Hidden("FacultyId", "", new { id = "EditFacultyId" })
+
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <script>
+                $(document).ready(function () {
+                    $(".btn-danger").click(function () {
+                        var facultyId = $(this).closest("tr").find("[id^='facultyid_']").text().trim(); // facultyId değerini al
+                        $("#RemoveFacultyId").val(facultyId); // Gizli alana ata
+                        console.log("Faculty ID: " + facultyId);
+                    });
+                });
+            </script>
+            @using (Html.BeginForm("RemoveFaculty", "Administrator", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="removeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="removeModalLabel">Remove Faculty</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <b>Are you sure you really want to delete this Faculty?</b>
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="itemName" class="form-label">Enter your password for confirmation:</label>
+                                        @Html.ValidationMessage("Password", "", new { @class = "text-danger" })
+                                        @Html.TextBox("Password", "", new { @class = "form-control mt-2", type = "password" })
+                                        @Html.Hidden("FacultyId", "", new { id = "RemoveFacultyId" })
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+        </div>
+    </div>
+</div>
