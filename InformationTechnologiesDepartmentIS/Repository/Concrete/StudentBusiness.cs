@@ -13,7 +13,6 @@ namespace InformationTechnologiesDepartmentIS.Repository.Concrete
 {
     public class StudentBusiness : IDatabaseBusiness<Student>
     {
-        ProgramBusiness programBusiness = new ProgramBusiness();
         public void Add(Student entity)
         {
             using (var db = new ITDepartmentDbEntities())
@@ -126,6 +125,7 @@ namespace InformationTechnologiesDepartmentIS.Repository.Concrete
 
         public ManageStudentViewModel GetStudentViewModel()
         {
+            ProgramBusiness programBusiness = new ProgramBusiness();
             var viewModel = new ManageStudentViewModel();
             viewModel.Students = GetStudents();
             viewModel.Programs = programBusiness.GetPrograms();
