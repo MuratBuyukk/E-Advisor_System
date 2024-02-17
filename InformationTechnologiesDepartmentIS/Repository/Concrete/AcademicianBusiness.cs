@@ -6,12 +6,15 @@ using System.Linq.Expressions;
 using System.Web;
 using InformationTechnologiesDepartmentIS.Models;
 using InformationTechnologiesDepartmentIS.Models.ViewModels;
+using InformationTechnologiesDepartmentIS.Models.ViewModels.AdministratorViewModels;
 using InformationTechnologiesDepartmentIS.Repository.Abstract;
+using InformationTechnologiesProgramIS.Repository.Concrete;
 
 namespace InformationTechnologiesDepartmentIS.Repository.Concrete
 {
     public class AcademicianBusiness : IDatabaseBusiness<Academician>
     {
+        ProgramBusiness programBusiness = new ProgramBusiness();
         public void Add(Academician entity)
         {
             using (var db = new ITDepartmentDbEntities())
@@ -90,6 +93,28 @@ namespace InformationTechnologiesDepartmentIS.Repository.Concrete
                 db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
+        }
+
+        public List<Academician> GetAcademicians()
+        {
+            using (var db = new ITDepartmentDbEntities())
+            {
+                var academicians = db.Academicians
+                    .Include(a => a.Program)
+                     .Include(a => a.Program.Department)
+                     .Include(a => a.Program.Department.Faculty)
+                     .Include(a => a.Program.Department.Faculty.Campus)
+                    .ToList();
+                return academicians;
+            }
+        }
+
+        public ManageAcademicianViewModel GetAcademicianViewModel()
+        {
+            var viewModel = new ManageAcademicianViewModel();
+            viewModel.Academicans = GetAcademicians();
+            viewModel.Programs = programBusiness.GetPrograms();
+            return viewModel;
         }
 
     }

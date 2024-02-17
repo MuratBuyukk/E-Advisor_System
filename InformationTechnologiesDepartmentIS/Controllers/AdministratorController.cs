@@ -355,6 +355,7 @@ public ActionResult Index()
         Program program, string password)
         {
             Debug.WriteLine("model state: " + ModelState.IsValid); // It returns false, the model is not valid but it works
+            Debug.WriteLine("Pid: " + program.ProgramId);
 
             if (string.IsNullOrEmpty(password))
             {
@@ -375,12 +376,11 @@ public ActionResult Index()
             return RedirectToAction("Program");
         }
 
-        [HttpPost, ActionName("EditDepartment")]
+        [HttpPost, ActionName("EditProgram")]
         [ValidateAntiForgeryToken]
-        public ActionResult EditDepartment([Bind(Include = "ProgramId,ProgramName,DepartmentId,HeadId")]
+        public ActionResult EditProgram([Bind(Include = "ProgramId,ProgramName,DepartmentId,HeadId")]
         Program program)
-        {
-
+        {            
             if (string.IsNullOrEmpty(program.ProgramName))
             {
                 ModelState.AddModelError("ProgramName", "Department Name is required.");

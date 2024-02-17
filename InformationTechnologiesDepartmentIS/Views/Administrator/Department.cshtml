@@ -117,8 +117,6 @@
                         var departmentId = $(this).closest("tr").find("[id^='departmentid_']").text().trim();// DepartmentId değerini al
                         $("#EditFacultyId").val(facultyId); // Gizli alana ata
                         $("#EditDepartmentId").val(departmentId); // Gizli alana ata
-                        console.log("faculty ID: " + facultyId);
-                        console.log("department ID: " + departmentId);
                     });
                 });
             </script>
@@ -173,7 +171,6 @@
                     $(".btn-danger").click(function () {
                         var departmentId = $(this).closest("tr").find("[id^='departmentid_']").text().trim(); // DepartmentId değerini al
                         $("#RemoveDepartmentId").val(departmentId); // Gizli alana ata
-                        console.log("Department ID: " + departmentId);
                     });
                 });
             </script>

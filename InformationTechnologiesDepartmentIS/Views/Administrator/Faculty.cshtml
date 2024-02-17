@@ -113,8 +113,6 @@
                         var campusId = $(this).closest("tr").find("[id^='campusid_']").text().trim();// FacultyId değerini al
                         $("#EditFacultyId").val(facultyId); // Gizli alana ata
                         $("#EditCampusId").val(campusId); // Gizli alana ata
-                        console.log("faculty ID: " + facultyId);
-                        console.log("campus ID: " + campusId);
                     });
                 });
             </script>
@@ -170,7 +168,6 @@
                     $(".btn-danger").click(function () {
                         var facultyId = $(this).closest("tr").find("[id^='facultyid_']").text().trim(); // facultyId değerini al
                         $("#RemoveFacultyId").val(facultyId); // Gizli alana ata
-                        console.log("Faculty ID: " + facultyId);
                     });
                 });
             </script>

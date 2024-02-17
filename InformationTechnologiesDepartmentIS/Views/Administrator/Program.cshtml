@@ -142,12 +142,9 @@
                         var programId = $(this).closest("tr").find("[id^='programid_']").text().trim();
                         var departmentId = $(this).closest("tr").find("[id^='departmentid_']").text().trim();
                         var headId = $(this).closest("tr").find("[id^='headid_']").text().trim();
-                        $("#EditProrgamId").val(programId); // Gizli alana ata
+                        $("#EditProgramId").val(programId); // Gizli alana ata
                         $("#EditDepartmentId").val(departmentId); // Gizli alana ata
                         $("#EditHeadId").val(headId); // Gizli alana ata
-                        console.log("program ID: " + programId);
-                        console.log("department ID: " + departmentId);
-                        console.log("head ID: " + headId);
                     });
                 });
             </script>
@@ -202,8 +199,7 @@
                 $(document).ready(function () {
                     $(".btn-danger").click(function () {
                         var programId = $(this).closest("tr").find("[id^='programid_']").text().trim();
-                        $("#RemoveprogramId").val(programId); // Gizli alana ata
-                        console.log("Program ID: " + programId);
+                        $("#RemoveProgramId").val(programId); // Gizli alana ata
                     });
                 });
             </script>

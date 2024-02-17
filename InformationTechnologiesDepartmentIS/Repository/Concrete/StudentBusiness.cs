@@ -6,11 +6,14 @@ using System.Web;
 using System.Data.Entity;
 using InformationTechnologiesDepartmentIS.Models;
 using InformationTechnologiesDepartmentIS.Repository.Abstract;
+using InformationTechnologiesDepartmentIS.Models.ViewModels.AdministratorViewModels;
+using InformationTechnologiesProgramIS.Repository.Concrete;
 
 namespace InformationTechnologiesDepartmentIS.Repository.Concrete
 {
     public class StudentBusiness : IDatabaseBusiness<Student>
     {
+        ProgramBusiness programBusiness = new ProgramBusiness();
         public void Add(Student entity)
         {
             using (var db = new ITDepartmentDbEntities())
@@ -107,6 +110,27 @@ namespace InformationTechnologiesDepartmentIS.Repository.Concrete
             }
         }
 
+        public List<Student> GetStudents()
+        {
+            using (var db = new ITDepartmentDbEntities())
+            {
+                var students = db.Students
+                    .Include(s => s.Program)
+                     .Include(s => s.Program.Department)
+                     .Include(s => s.Program.Department.Faculty)
+                     .Include(s => s.Program.Department.Faculty.Campus)
+                    .ToList();
+                return students;
+            }
+        }
+
+        public ManageStudentViewModel GetStudentViewModel()
+        {
+            var viewModel = new ManageStudentViewModel();
+            viewModel.Students = GetStudents();
+            viewModel.Programs = programBusiness.GetPrograms();
+            return viewModel;
+        }
 
 
     }
