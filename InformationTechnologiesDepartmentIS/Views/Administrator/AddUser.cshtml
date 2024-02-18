@@ -18,13 +18,11 @@
             <label for="exampleInputEmail1" class="form-label">Last Name</label>
             @Html.TextBox("LastName", "", new { @class = "form-control mt-2" })
             @Html.ValidationMessage("LastName", "", new { @class = "text-danger" })
-
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
             @Html.TextBox("Email", "", new { @class = "form-control mt-2" })
             @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
-
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
@@ -40,7 +38,6 @@
                 list.Add(new SelectListItem { Text = "Academician", Value = "Academician" });
                 list.Add(new SelectListItem { Text = "Admin", Value = "Admin" });
                 list.Add(new SelectListItem { Text = "Student", Value = "Student" });
-
             }
             @Html.DropDownList("Role", list, "Select Role..", new { @class = "form-select form-select-sm mt-2 px-3 py-2" })
             @Html.ValidationMessage("Role", "", new { @class = "text-danger" })
