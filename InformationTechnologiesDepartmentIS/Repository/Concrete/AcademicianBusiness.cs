@@ -44,6 +44,17 @@ namespace InformationTechnologiesDepartmentIS.Repository.Concrete
             }
         }
 
+        public void Delete(Guid id)
+        {
+            using (var db = new ITDepartmentDbEntities())
+            {
+                var entity = db.Academicians.Find(id);
+                db.Academicians.Attach(entity);
+                db.Entry(entity).State = System.Data.Entity.EntityState.Deleted;
+                db.SaveChanges();
+            }
+        }
+
         public Academician Get(Expression<Func<Academician, bool>> expression)
         {
             using (var db = new ITDepartmentDbEntities())
@@ -94,27 +105,27 @@ namespace InformationTechnologiesDepartmentIS.Repository.Concrete
             }
         }
 
-        public List<Academician> GetAcademicians()
+        public List<Academician> getAcademicians()
         {
             using (var db = new ITDepartmentDbEntities())
             {
-                var academicians = db.Academicians
-                    .Include(a => a.Program)
-                     .Include(a => a.Program.Department)
-                     .Include(a => a.Program.Department.Faculty)
-                     .Include(a => a.Program.Department.Faculty.Campus)
+                return db.Academicians
+                    .Include(p => p.Program)
                     .ToList();
-                return academicians;
             }
         }
 
-        public ManageAcademicianViewModel GetAcademicianViewModel()
+        public AddAcademicianViewModel AddAcademiciansViewModel()
         {
+            var academicians = getAcademicians();
             ProgramBusiness programBusiness = new ProgramBusiness();
-            var viewModel = new ManageAcademicianViewModel();
-            viewModel.Academicans = GetAcademicians();
-            viewModel.Programs = programBusiness.GetPrograms();
-            return viewModel;
+            var programs = programBusiness.GetAll();
+            var addAcademiciansViewModel = new AddAcademicianViewModel
+            {
+                Academicians = academicians,
+                Programs = programs
+            };
+            return addAcademiciansViewModel;
         }
 
     }

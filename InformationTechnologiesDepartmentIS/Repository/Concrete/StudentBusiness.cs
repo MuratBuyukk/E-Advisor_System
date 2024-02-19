@@ -6,6 +6,7 @@ using System.Web;
 using System.Data.Entity;
 using InformationTechnologiesDepartmentIS.Models;
 using InformationTechnologiesDepartmentIS.Repository.Abstract;
+using InformationTechnologiesDepartmentIS.Models.ViewModels;
 using InformationTechnologiesDepartmentIS.Models.ViewModels.AdministratorViewModels;
 using InformationTechnologiesProgramIS.Repository.Concrete;
 
@@ -42,7 +43,16 @@ namespace InformationTechnologiesDepartmentIS.Repository.Concrete
                 db.SaveChanges();
             }
         }
-
+        public void Delete(Guid id)
+        {
+            using (var db = new ITDepartmentDbEntities())
+            {
+                var entity = db.Students.Find(id);
+                db.Students.Attach(entity);
+                db.Entry(entity).State = System.Data.Entity.EntityState.Deleted;
+                db.SaveChanges();
+            }
+        }
         public Student Get(Expression<Func<Student, bool>> expression)
         {
             using (var db = new ITDepartmentDbEntities())
@@ -109,29 +119,28 @@ namespace InformationTechnologiesDepartmentIS.Repository.Concrete
             }
         }
 
-        public List<Student> GetStudents()
-        {
+        public List<Student> getStudents() {
             using (var db = new ITDepartmentDbEntities())
             {
-                var students = db.Students
-                    .Include(s => s.Program)
-                     .Include(s => s.Program.Department)
-                     .Include(s => s.Program.Department.Faculty)
-                     .Include(s => s.Program.Department.Faculty.Campus)
+                return db.Students
+                    .Include(p => p.Program)
+                    .Include(p => p.Standing)
                     .ToList();
-                return students;
             }
         }
 
-        public ManageStudentViewModel GetStudentViewModel()
+        public AddUserViewModel AddUserViewModel()
         {
+            var students = getStudents();
             ProgramBusiness programBusiness = new ProgramBusiness();
-            var viewModel = new ManageStudentViewModel();
-            viewModel.Students = GetStudents();
-            viewModel.Programs = programBusiness.GetPrograms();
-            return viewModel;
+            var programs = programBusiness.GetAll();
+            var addUserViewModel = new AddUserViewModel
+            {
+                Students = students,
+                Programs = programs
+            };
+            return addUserViewModel;
         }
-
 
     }
 }
