@@ -7,6 +7,7 @@ using System.Web;
 using InformationTechnologiesDepartmentIS.Models;
 using InformationTechnologiesDepartmentIS.Models.ViewModels;
 using InformationTechnologiesDepartmentIS.Repository.Abstract;
+using InformationTechnologiesProgramIS.Repository.Concrete;
 
 namespace InformationTechnologiesDepartmentIS.Repository.Concrete
 {
@@ -32,6 +33,17 @@ namespace InformationTechnologiesDepartmentIS.Repository.Concrete
         }
 
         public void Delete(int id)
+        {
+            using (var db = new ITDepartmentDbEntities())
+            {
+                var entity = db.Academicians.Find(id);
+                db.Academicians.Attach(entity);
+                db.Entry(entity).State = System.Data.Entity.EntityState.Deleted;
+                db.SaveChanges();
+            }
+        }
+
+        public void Delete(Guid id)
         {
             using (var db = new ITDepartmentDbEntities())
             {
@@ -90,6 +102,29 @@ namespace InformationTechnologiesDepartmentIS.Repository.Concrete
                 db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
+        }
+
+        public List<Academician> getAcademicians()
+        {
+            using (var db = new ITDepartmentDbEntities())
+            {
+                return db.Academicians
+                    .Include(p => p.Program)
+                    .ToList();
+            }
+        }
+
+        public AddAcademicianViewModel AddAcademiciansViewModel()
+        {
+            var academicians = getAcademicians();
+            ProgramBusiness programBusiness = new ProgramBusiness();
+            var programs = programBusiness.GetAll();
+            var addAcademiciansViewModel = new AddAcademicianViewModel
+            {
+                Academicians = academicians,
+                Programs = programs
+            };
+            return addAcademiciansViewModel;
         }
 
     }

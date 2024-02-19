@@ -6,9 +6,9 @@ using System.Web;
 
 namespace InformationTechnologiesDepartmentIS.Models.ViewModels
 {
-    public class AddUserViewModel
+    public class AddAcademicianViewModel
     {
-        public List<Student> Students { get; set; }
+        public List<Academician> Academicians { get; set; }
         public List<Program> Programs { get; set; }
         [Required(ErrorMessage = "Please Enter an FirstName.")]
         public string FirstName { get; set; }
@@ -18,7 +18,7 @@ namespace InformationTechnologiesDepartmentIS.Models.ViewModels
         public string Email { get; set; }
         [Required(ErrorMessage = "Please Enter an Password.")]
         public string Password { get; set; }
-        [Required(ErrorMessage = "Please Select an Role.")]
-        public string Role { get; set; }
+        [Required(ErrorMessage = "Please Enter an Office No.")]
+        public string Office { get; set; }
     }
 }

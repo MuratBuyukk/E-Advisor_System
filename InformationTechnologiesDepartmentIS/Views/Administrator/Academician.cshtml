@@ -1,0 +1,226 @@
+﻿@model InformationTechnologiesDepartmentIS.Models.ViewModels.AddAcademicianViewModel
+
+@{
+    ViewBag.Title = "Academician";
+    Layout = "~/Views/Shared/_AdministratorLayout.cshtml";
+}
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<div class="container-fluid px-4 mt-4">
+    <h3>Control Academicians</h3>
+    <div class="card mb-4 mt-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Academicians
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Academician Name</th>
+                        <th>Academician Email</th>
+                        <th>Academician Office</th>
+                        <th>Academician Program</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var a in Model.Academicians)
+                    {
+                        <tr>
+                            <td>
+                                <span style="float: left;">@a.AcademicianFirstName @a.AcademicianLastName</span>
+                            </td>
+                            <td>
+                                <span style="float: left;">@a.AcademicianEmail</span>
+                            </td>
+                            <td>
+                                <span style="float: left;">@a.RoomNo</span>
+                            </td>
+                            <td>
+                                <span style="float: left;">@a.Program.ProgramName</span>
+                                <div class="btn-group" style="float: right;">
+                                    <button type="button" class="btn btn-warning btn-sm rounded me-2" data-bs-toggle="modal" data-bs-target="#editModal-@a.UserId">
+                                        <i class="fas fa-pencil-alt fa-xs"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm rounded me-2" data-bs-toggle="modal" data-bs-target="#removeModal-@a.UserId">
+                                        <i class="fas fa-trash-alt fa-xs"></i>
+                                    </button>
+                                </div>
+                                <div style="clear: both;"></div>
+                            </td>
+                        </tr>
+                        <!-- MODAL STARTS -->
+                        <div class="modal fade" id="removeModal-@a.UserId" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="removeModalLabel">Remove Academician</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    @using (Html.BeginForm("RemoveAcademician", "Administrator", FormMethod.Post,
+                                      new { id = "removeAcademician-" + a.UserId }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div class="modal-body">
+                                            <b>Are you sure you really want to delete this academician?</b>
+                                            <div class="mb-3">
+                                                <label for="itemName" class="form-label">Enter your password for confirmation:</label>
+                                                @Html.TextBox("Password", "", new { @class = "form-control mt-2", type = "password" })
+                                                @Html.ValidationMessage("Password", "", new { @class = "text-danger" })
+                                                @Html.Hidden("AcademicianId", a.UserId, new { id = "academicianId-" + a.UserId })
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <input type="submit" class="btn btn-primary" />
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- EDIT MODAL -->
+                        <div class="modal fade" id="editModal-@a.UserId" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editModalLabel">Edit Academician</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    @using (Html.BeginForm("EditAcademician", "Administrator", FormMethod.Post,
+                                      new { id = "editAcademician-" + a.UserId }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.Hidden("UserId", a.UserId, new { id = "academicianId-" + a.UserId })
+                                        <div class="modal-body">
+                                            <b>Please correct the values to be edited.</b>
+                                            <div class="mt-2 d-flex flex-column gap-2">
+                                                <div>
+                                                    <label for="itemName" class="form-label">First Name:</label>
+                                                    @Html.TextBox("AcademicianFirstName", a.AcademicianFirstName, new { @class = "form-control mt-1" })
+                                                    @Html.ValidationMessage("AcademicianFirstName", "", new { @class = "text-danger" })
+                                                </div>
+                                                <div>
+
+                                                    <label for="itemName" class="form-label">Last Name:</label>
+                                                    @Html.TextBox("AcademicianLastName", a.AcademicianLastName, new { @class = "form-control mt-1" })
+                                                    @Html.ValidationMessage("AcademicianLastName", "", new { @class = "text-danger" })
+                                                </div>
+
+                                                <div>
+
+                                                    <label for="itemName" class="form-label">Email:</label>
+                                                    @Html.TextBox("AcademicianEmail", a.AcademicianEmail, new { @class = "form-control mt-1" })
+                                                    @Html.ValidationMessage("AcademicianEmail", "", new { @class = "text-danger" })
+                                                </div>
+                                                <div>
+
+                                                    <label for="itemName" class="form-label">Office No:</label>
+                                                    @Html.TextBox("RoomNo", a.RoomNo, new { @class = "form-control mt-1" })
+                                                    @Html.ValidationMessage("RoomNo", "", new { @class = "text-danger" })
+                                                </div>
+                                                <div>
+
+                                                    <label for="itemName" class="form-label">Select Program:</label>
+                                                    @{
+                                                        var programList = new List<SelectListItem>();
+                                                        foreach (var program in Model.Programs)
+                                                        {
+                                                            programList.Add(new SelectListItem
+                                                            {
+                                                                Text = $"{program.ProgramName}",
+                                                                Value = program.ProgramId.ToString(),
+                                                                Selected = program.ProgramName == a.Program.ProgramName
+                                                            });
+                                                        }
+                                                    }
+                                                    @Html.DropDownList("ProgramId", programList, new { @class = "form-select border border-secondary border-opacity-50" })
+                                                    @Html.ValidationMessage("ProgramId", "", new { @class = "text-danger fw-bold" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <!-- MODAL ENDS -->
+
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div class="btn-group" style="float: right;">
+                                <button type="button" class="btn btn-success btn-sm rounded me-2" data-bs-toggle="modal" data-bs-target="#addModal" id="">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            @using (Html.BeginForm("AddAcademician", "Administrator", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addModalLabel">Add Academician</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <b>Please write the information of the academician to be added.</b>
+                                <div class="mt-3 d-flex flex-column gap-3">
+                                    <div>
+                                        <label for="itemName" class="form-label">First Name:</label>
+                                        @Html.TextBox("FirstName", "", new { @class = "form-control mt-1" })
+                                        @Html.ValidationMessage("FirstName", "", new { @class = "text-danger" })
+                                    </div>
+                                    <div>
+                                        <label for="itemName" class="form-label">Last Name:</label>
+                                        @Html.TextBox("LastName", "", new { @class = "form-control mt-1" })
+                                        @Html.ValidationMessage("LastName", "", new { @class = "text-danger" })
+                                    </div>
+                                    <div>
+                                        <label for="itemName" class="form-label">Email Address:</label>
+                                        @Html.TextBox("Email", "", new { @class = "form-control mt-1" })
+                                        @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
+                                    </div>
+                                    <div>
+                                        <label for="itemName" class="form-label">Office No:</label>
+                                        @Html.TextBox("Office", "", new { @class = "form-control mt-1" })
+                                        @Html.ValidationMessage("Office", "", new { @class = "text-danger" })
+                                    </div>
+                                    <div>
+                                        <label for="itemName" class="form-label">Password:</label>
+                                        @Html.TextBox("Password", "", new { @class = "form-control mt-1" })
+                                        @Html.ValidationMessage("Password", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

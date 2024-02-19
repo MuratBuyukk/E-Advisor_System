@@ -6,6 +6,8 @@ using System.Web;
 using System.Data.Entity;
 using InformationTechnologiesDepartmentIS.Models;
 using InformationTechnologiesDepartmentIS.Repository.Abstract;
+using InformationTechnologiesDepartmentIS.Models.ViewModels;
+using InformationTechnologiesProgramIS.Repository.Concrete;
 
 namespace InformationTechnologiesDepartmentIS.Repository.Concrete
 {
@@ -40,7 +42,16 @@ namespace InformationTechnologiesDepartmentIS.Repository.Concrete
                 db.SaveChanges();
             }
         }
-
+        public void Delete(Guid id)
+        {
+            using (var db = new ITDepartmentDbEntities())
+            {
+                var entity = db.Students.Find(id);
+                db.Students.Attach(entity);
+                db.Entry(entity).State = System.Data.Entity.EntityState.Deleted;
+                db.SaveChanges();
+            }
+        }
         public Student Get(Expression<Func<Student, bool>> expression)
         {
             using (var db = new ITDepartmentDbEntities())
@@ -107,7 +118,28 @@ namespace InformationTechnologiesDepartmentIS.Repository.Concrete
             }
         }
 
+        public List<Student> getStudents() {
+            using (var db = new ITDepartmentDbEntities())
+            {
+                return db.Students
+                    .Include(p => p.Program)
+                    .Include(p => p.Standing)
+                    .ToList();
+            }
+        }
 
+        public AddUserViewModel AddUserViewModel()
+        {
+            var students = getStudents();
+            ProgramBusiness programBusiness = new ProgramBusiness();
+            var programs = programBusiness.GetAll();
+            var addUserViewModel = new AddUserViewModel
+            {
+                Students = students,
+                Programs = programs
+            };
+            return addUserViewModel;
+        }
 
     }
 }
