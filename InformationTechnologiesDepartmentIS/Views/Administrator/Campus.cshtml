@@ -90,7 +90,6 @@
                     $(".btn-warning").click(function () {
                         var campusId = $(this).closest("tr").find("[id^='id_']").text().trim(); // CampusId değerini al
                         $("#EditCampusId").val(campusId); // Gizli alana ata
-                        console.log("Campus ID: " + campusId);
                     });
                 });
             </script>
@@ -129,7 +128,6 @@
                     $(".btn-danger").click(function () {
                         var campusId = $(this).closest("tr").find("[id^='id_']").text().trim(); // CampusId değerini al
                         $("#RemoveCampusId").val(campusId); // Gizli alana ata
-                        console.log("Campus ID: " + campusId);
                     });
                 });
             </script>

@@ -243,9 +243,11 @@
     </Compile>
     <Compile Include="Models\ViewModels\AddAcademicianViewModel.cs" />
     <Compile Include="Models\ViewModels\AddUserViewModel.cs" />
+    <Compile Include="Models\ViewModels\AdministratorViewModels\ManageAcademicianViewModel.cs" />
     <Compile Include="Models\ViewModels\AdministratorViewModels\ManageDepartmentViewModel.cs" />
     <Compile Include="Models\ViewModels\AdministratorViewModels\ManageFacultyViewModel.cs" />
     <Compile Include="Models\ViewModels\AdministratorViewModels\ManageProgramViewModel.cs" />
+    <Compile Include="Models\ViewModels\AdministratorViewModels\ManageStudentViewModel.cs" />
     <Compile Include="Models\ViewModels\AppointmentViewModel.cs" />
     <Compile Include="Models\ViewModels\GraduationProjectViewModels\ProjectConsultantChangeProposalViewModel.cs" />
     <Compile Include="Models\ViewModels\GraduationProjectViewModels\ProjectConsultantProposalViewModel.cs" />

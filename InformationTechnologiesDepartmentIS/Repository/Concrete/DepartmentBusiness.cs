@@ -13,7 +13,6 @@ namespace InformationTechnologiesDepartmentIS.Repository.Concrete
 {
     public class DepartmentBusiness : IDatabaseBusiness<Department>
     {
-        FacultyBusiness facultyBusiness = new FacultyBusiness();
         public void Add(Department entity)
         {
             using (var db = new ITDepartmentDbEntities())
@@ -108,6 +107,7 @@ namespace InformationTechnologiesDepartmentIS.Repository.Concrete
 
         public ManageDepartmentViewModel GetDepartmentViewModel()
         {
+            FacultyBusiness facultyBusiness = new FacultyBusiness();
             var viewModel = new ManageDepartmentViewModel();
             viewModel.Faculties = facultyBusiness.GetAll();
             viewModel.Departments = GetDepartments();

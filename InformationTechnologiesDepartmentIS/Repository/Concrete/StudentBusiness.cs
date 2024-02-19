@@ -7,6 +7,7 @@ using System.Data.Entity;
 using InformationTechnologiesDepartmentIS.Models;
 using InformationTechnologiesDepartmentIS.Repository.Abstract;
 using InformationTechnologiesDepartmentIS.Models.ViewModels;
+using InformationTechnologiesDepartmentIS.Models.ViewModels.AdministratorViewModels;
 using InformationTechnologiesProgramIS.Repository.Concrete;
 
 namespace InformationTechnologiesDepartmentIS.Repository.Concrete
